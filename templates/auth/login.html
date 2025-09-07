@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}Login - Career & Education Advisor{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-5">
+            <div class="card border-0 shadow-lg">
+                <div class="card-body p-5">
+                    <div class="text-center mb-4">
+                        <i data-feather="user" class="text-primary mb-3" style="width: 64px; height: 64px;"></i>
+                        <h2 class="fw-bold">Welcome Back</h2>
+                        <p class="text-muted">Sign in to access your personalized career guidance</p>
+                    </div>
+                    
+                    <form method="POST">
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email Address</label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" name="password" required>
+                        </div>
+                        
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="remember" name="remember">
+                            <label class="form-check-label" for="remember">
+                                Remember me
+                            </label>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary w-100 mb-3">
+                            <i data-feather="log-in" class="me-2"></i>
+                            Sign In
+                        </button>
+                    </form>
+                    
+                    <div class="text-center">
+                        <p class="text-muted">Don't have an account? 
+                            <a href="{{ url_for('auth.register') }}" class="text-decoration-none">Sign up here</a>
+                        </p>
+                        <a href="{{ url_for('index') }}" class="text-decoration-none">
+                            <i data-feather="arrow-left" class="me-1"></i>
+                            Back to Home
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

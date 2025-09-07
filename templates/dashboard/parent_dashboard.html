@@ -1,0 +1,204 @@
+{% extends "base.html" %}
+
+{% block title %}Parent Dashboard - Career & Education Advisor{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Welcome Section -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="card border-0 bg-gradient-primary text-white">
+                <div class="card-body p-4">
+                    <div class="row align-items-center">
+                        <div class="col-md-8">
+                            <h2 class="fw-bold mb-2">Welcome, {{ user.first_name }}!</h2>
+                            <p class="mb-0">Monitor your child's career journey and provide guidance for their future success.</p>
+                        </div>
+                        <div class="col-md-4 text-md-end">
+                            <i data-feather="users" style="width: 64px; height: 64px;"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Children Overview -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h3 class="fw-bold">Your Children</h3>
+                <a href="{{ url_for('auth.parent_child_link') }}" class="btn btn-primary">
+                    <i data-feather="plus" class="me-2"></i>Link Child Account
+                </a>
+            </div>
+        </div>
+        
+        {% if children %}
+        {% for child in children %}
+        <div class="col-lg-6 mb-4">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <div class="row align-items-center">
+                        <div class="col-8">
+                            <h5 class="fw-bold mb-2">{{ child.get_full_name() }}</h5>
+                            <div class="d-flex gap-3 mb-3">
+                                <span class="badge bg-primary">{{ child.class_level or 'Not specified' }}</span>
+                                <span class="badge bg-success">{{ child.category or 'General' }}</span>
+                                <span class="badge bg-info">{{ child.state or 'India' }}</span>
+                            </div>
+                            <p class="text-muted small mb-0">Last active: {{ child.last_login.strftime('%d %b %Y') if child.last_login else 'Never' }}</p>
+                        </div>
+                        <div class="col-4 text-end">
+                            <div class="dropdown">
+                                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                    Actions
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#" onclick="viewProgress('{{ child.id }}')">View Progress</a></li>
+                                    <li><a class="dropdown-item" href="#" onclick="viewRecommendations('{{ child.id }}')">Career Suggestions</a></li>
+                                    <li><a class="dropdown-item" href="#" onclick="sendReminder('{{ child.id }}')">Send Reminder</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Quick Stats -->
+                    <div class="row g-3 mt-3">
+                        <div class="col-4 text-center">
+                            <h6 class="fw-bold text-primary mb-1">2</h6>
+                            <small class="text-muted">Quizzes Taken</small>
+                        </div>
+                        <div class="col-4 text-center">
+                            <h6 class="fw-bold text-success mb-1">15</h6>
+                            <small class="text-muted">Colleges Saved</small>
+                        </div>
+                        <div class="col-4 text-center">
+                            <h6 class="fw-bold text-warning mb-1">5</h6>
+                            <small class="text-muted">Scholarships</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <div class="col-12">
+            <div class="card border-0 bg-light">
+                <div class="card-body p-5 text-center">
+                    <i data-feather="user-plus" class="text-muted mb-3" style="width: 64px; height: 64px;"></i>
+                    <h4 class="fw-bold mb-3">No Children Linked</h4>
+                    <p class="text-muted mb-4">Link your child's account to monitor their career exploration progress and provide guidance.</p>
+                    <a href="{{ url_for('auth.parent_child_link') }}" class="btn btn-primary btn-lg">
+                        <i data-feather="plus" class="me-2"></i>Link Child Account
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Parental Resources -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <h3 class="fw-bold mb-4">Parental Guidance Resources</h3>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body p-4 text-center">
+                    <i data-feather="book-open" class="text-primary mb-3" style="width: 48px; height: 48px;"></i>
+                    <h5 class="fw-bold mb-3">Career Guidance Tips</h5>
+                    <p class="text-muted mb-3">Learn how to support your child's career decisions</p>
+                    <a href="#" class="btn btn-outline-primary">Read Guide</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body p-4 text-center">
+                    <i data-feather="trending-up" class="text-success mb-3" style="width: 48px; height: 48px;"></i>
+                    <h5 class="fw-bold mb-3">Market Trends</h5>
+                    <p class="text-muted mb-3">Stay updated on emerging career opportunities</p>
+                    <a href="#" class="btn btn-outline-success">View Trends</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body p-4 text-center">
+                    <i data-feather="users" class="text-info mb-3" style="width: 48px; height: 48px;"></i>
+                    <h5 class="fw-bold mb-3">Parent Community</h5>
+                    <p class="text-muted mb-3">Connect with other parents for advice</p>
+                    <a href="#" class="btn btn-outline-info">Join Community</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Comparison Tool -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card border-0 shadow-lg">
+                <div class="card-body p-5">
+                    <h4 class="fw-bold mb-4">
+                        <i data-feather="bar-chart" class="text-primary me-2"></i>
+                        Career Path Comparison Tool
+                    </h4>
+                    <p class="text-muted mb-4">Compare different career options for your child based on their interests, market demand, and growth potential.</p>
+                    
+                    <div class="row g-4">
+                        <div class="col-md-4">
+                            <div class="border rounded p-3 text-center">
+                                <h6 class="fw-bold text-primary">Engineering</h6>
+                                <div class="progress mb-2" style="height: 8px;">
+                                    <div class="progress-bar bg-primary" style="width: 85%"></div>
+                                </div>
+                                <small class="text-muted">Market Demand: 85%</small>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="border rounded p-3 text-center">
+                                <h6 class="fw-bold text-success">Medicine</h6>
+                                <div class="progress mb-2" style="height: 8px;">
+                                    <div class="progress-bar bg-success" style="width: 90%"></div>
+                                </div>
+                                <small class="text-muted">Market Demand: 90%</small>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="border rounded p-3 text-center">
+                                <h6 class="fw-bold text-warning">Business</h6>
+                                <div class="progress mb-2" style="height: 8px;">
+                                    <div class="progress-bar bg-warning" style="width: 75%"></div>
+                                </div>
+                                <small class="text-muted">Market Demand: 75%</small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center mt-4">
+                        <button class="btn btn-primary btn-lg">
+                            <i data-feather="compare" class="me-2"></i>
+                            Create Detailed Comparison
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function viewProgress(childId) {
+    alert(`Viewing progress for child ${childId}`);
+}
+
+function viewRecommendations(childId) {
+    alert(`Viewing career recommendations for child ${childId}`);
+}
+
+function sendReminder(childId) {
+    alert(`Sending reminder to child ${childId} to complete their career assessment`);
+}
+</script>
+{% endblock %}

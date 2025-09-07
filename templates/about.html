@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+
+{% block title %}About Us - Career & Education Advisor{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Hero Section -->
+    <div class="row justify-content-center mb-5">
+        <div class="col-lg-8 text-center">
+            <h1 class="display-4 fw-bold mb-4">About Career & Education Advisor</h1>
+            <p class="lead text-muted">Empowering students to make informed career decisions through personalized guidance and comprehensive information about government educational opportunities.</p>
+        </div>
+    </div>
+
+    <!-- Mission & Vision -->
+    <div class="row g-5 mb-5">
+        <div class="col-lg-6">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body p-5">
+                    <div class="text-center mb-4">
+                        <i data-feather="target" class="text-primary mb-3" style="width: 64px; height: 64px;"></i>
+                        <h3 class="fw-bold">Our Mission</h3>
+                    </div>
+                    <p class="text-muted">To bridge the information gap between students and government educational opportunities by providing personalized career guidance, comprehensive college databases, and scholarship information tailored to individual needs and categories.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body p-5">
+                    <div class="text-center mb-4">
+                        <i data-feather="eye" class="text-success mb-3" style="width: 64px; height: 64px;"></i>
+                        <h3 class="fw-bold">Our Vision</h3>
+                    </div>
+                    <p class="text-muted">To create an inclusive digital platform where every Indian student, regardless of their background or location, has access to accurate, up-to-date information about educational opportunities and career paths.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features -->
+    <div class="row g-4 mb-5">
+        <div class="col-lg-4">
+            <div class="text-center">
+                <i data-feather="users" class="text-primary mb-3" style="width: 48px; height: 48px;"></i>
+                <h5 class="fw-bold mb-3">Multi-Role Portal</h5>
+                <p class="text-muted">Separate dashboards for students, parents, and teachers with role-specific features and monitoring capabilities.</p>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="text-center">
+                <i data-feather="award" class="text-success mb-3" style="width: 48px; height: 48px;"></i>
+                <h5 class="fw-bold mb-3">Scholarship Matcher</h5>
+                <p class="text-muted">AI-powered scholarship recommendations based on category (SC/ST/OBC/General), academic performance, and family income.</p>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="text-center">
+                <i data-feather="compass" class="text-info mb-3" style="width: 48px; height: 48px;"></i>
+                <h5 class="fw-bold mb-3">Career Simulator</h5>
+                <p class="text-muted">What-if scenario tool that shows career outcomes based on stream choices, helping students make informed decisions.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Government Support -->
+    <div class="row justify-content-center mb-5">
+        <div class="col-lg-8">
+            <div class="card border-0 bg-gradient-primary text-white">
+                <div class="card-body p-5 text-center">
+                    <h3 class="fw-bold mb-4">Government Initiative</h3>
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-center justify-content-center mb-3">
+                                <i data-feather="check-circle" class="me-3" style="width: 32px; height: 32px;"></i>
+                                <h5 class="mb-0">Digital India Supported</h5>
+                            </div>
+                            <p class="mb-0">Part of the Digital India initiative to democratize access to educational information.</p>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-center justify-content-center mb-3">
+                                <i data-feather="check-circle" class="me-3" style="width: 32px; height: 32px;"></i>
+                                <h5 class="mb-0">Ministry of Education</h5>
+                            </div>
+                            <p class="mb-0">Aligned with Ministry of Education guidelines for career guidance and counseling.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Statistics -->
+    <div class="row g-4 text-center mb-5">
+        <div class="col-md-3">
+            <div class="stat-item">
+                <h2 class="fw-bold text-primary display-5">50K+</h2>
+                <p class="text-muted mb-0">Students Guided</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-item">
+                <h2 class="fw-bold text-success display-5">2000+</h2>
+                <p class="text-muted mb-0">Government Colleges</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-item">
+                <h2 class="fw-bold text-info display-5">500+</h2>
+                <p class="text-muted mb-0">Scholarships</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-item">
+                <h2 class="fw-bold text-warning display-5">100+</h2>
+                <p class="text-muted mb-0">Career Paths</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Team -->
+    <div class="row justify-content-center">
+        <div class="col-lg-8 text-center">
+            <h3 class="fw-bold mb-4">Our Commitment</h3>
+            <p class="text-muted">We are committed to providing accurate, up-to-date information about government educational opportunities, scholarships, and career paths. Our platform is designed to be inclusive, accessible, and user-friendly for students from all backgrounds and regions of India.</p>
+            <div class="mt-4">
+                <a href="{{ url_for('contact') }}" class="btn btn-primary btn-lg me-3">Contact Us</a>
+                <a href="{{ url_for('index') }}" class="btn btn-outline-secondary btn-lg">Get Started</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

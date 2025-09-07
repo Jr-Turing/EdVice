@@ -1,0 +1,248 @@
+{% extends "base.html" %}
+
+{% block title %}Career Simulator - Career & Education Advisor{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Header -->
+    <div class="row justify-content-center mb-5">
+        <div class="col-lg-8 text-center">
+            <h1 class="display-4 fw-bold mb-4">Career Path Simulator</h1>
+            <p class="lead text-muted">Explore "What if" scenarios and see where different educational choices could lead you.</p>
+        </div>
+    </div>
+
+    <!-- Simulator Form -->
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-lg">
+                <div class="card-body p-5">
+                    <h3 class="fw-bold mb-4 text-center">What if I choose...</h3>
+                    
+                    <form method="POST" id="simulatorForm">
+                        <!-- Stream Selection -->
+                        <div class="mb-4">
+                            <label class="form-label fw-semibold">Stream after 10th/12th</label>
+                            <div class="row g-3">
+                                <div class="col-md-4">
+                                    <div class="card stream-card" onclick="selectStream('Science')">
+                                        <div class="card-body text-center p-4">
+                                            <i data-feather="microscope" class="text-primary mb-3" style="width: 48px; height: 48px;"></i>
+                                            <h5 class="fw-bold">Science</h5>
+                                            <p class="text-muted small mb-0">PCM, PCB, PCMB</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card stream-card" onclick="selectStream('Commerce')">
+                                        <div class="card-body text-center p-4">
+                                            <i data-feather="trending-up" class="text-success mb-3" style="width: 48px; height: 48px;"></i>
+                                            <h5 class="fw-bold">Commerce</h5>
+                                            <p class="text-muted small mb-0">Accounts, Economics, Business</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card stream-card" onclick="selectStream('Arts')">
+                                        <div class="card-body text-center p-4">
+                                            <i data-feather="book-open" class="text-info mb-3" style="width: 48px; height: 48px;"></i>
+                                            <h5 class="fw-bold">Arts/Humanities</h5>
+                                            <p class="text-muted small mb-0">History, Geography, Political Science</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="hidden" name="stream_choice" id="streamChoice" required>
+                        </div>
+
+                        <!-- Subject Selection -->
+                        <div class="mb-4" id="subjectsSection" style="display: none;">
+                            <label class="form-label fw-semibold">Select Subjects</label>
+                            <div id="subjectsContainer"></div>
+                        </div>
+
+                        <!-- Interest Areas -->
+                        <div class="mb-4">
+                            <label class="form-label fw-semibold">Areas of Interest</label>
+                            <div class="row g-2">
+                                <div class="col-md-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="interests" value="technology" id="tech">
+                                        <label class="form-check-label" for="tech">Technology</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="interests" value="healthcare" id="health">
+                                        <label class="form-check-label" for="health">Healthcare</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="interests" value="business" id="business">
+                                        <label class="form-check-label" for="business">Business</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="interests" value="arts" id="arts">
+                                        <label class="form-check-label" for="arts">Creative Arts</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="interests" value="research" id="research">
+                                        <label class="form-check-label" for="research">Research</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="interests" value="teaching" id="teaching">
+                                        <label class="form-check-label" for="teaching">Teaching</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="interests" value="social_service" id="social">
+                                        <label class="form-check-label" for="social">Social Service</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="interests" value="government" id="government">
+                                        <label class="form-check-label" for="government">Government Jobs</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary btn-lg px-5" id="simulateBtn" disabled>
+                                <i data-feather="play" class="me-2"></i>
+                                Simulate My Future
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Example Scenarios -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <h3 class="fw-bold text-center mb-4">Popular Simulation Scenarios</h3>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-4 text-center">
+                    <i data-feather="cpu" class="text-primary mb-3" style="width: 48px; height: 48px;"></i>
+                    <h5 class="fw-bold">Science + Engineering</h5>
+                    <p class="text-muted">See career paths in technology and engineering fields</p>
+                    <button class="btn btn-outline-primary" onclick="quickSimulate('Science', ['Mathematics', 'Physics', 'Chemistry'])">Quick Simulate</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-4 text-center">
+                    <i data-feather="heart" class="text-danger mb-3" style="width: 48px; height: 48px;"></i>
+                    <h5 class="fw-bold">Science + Medical</h5>
+                    <p class="text-muted">Explore healthcare and medical career opportunities</p>
+                    <button class="btn btn-outline-danger" onclick="quickSimulate('Science', ['Biology', 'Chemistry', 'Physics'])">Quick Simulate</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-4 text-center">
+                    <i data-feather="briefcase" class="text-success mb-3" style="width: 48px; height: 48px;"></i>
+                    <h5 class="fw-bold">Commerce + Business</h5>
+                    <p class="text-muted">Discover business and finance career paths</p>
+                    <button class="btn btn-outline-success" onclick="quickSimulate('Commerce', ['Accounts', 'Economics', 'Business Studies'])">Quick Simulate</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.stream-card {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.stream-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.stream-card.selected {
+    border-color: var(--primary-blue);
+    background: rgba(37, 99, 235, 0.05);
+}
+</style>
+
+<script>
+const subjectOptions = {
+    'Science': ['Mathematics', 'Physics', 'Chemistry', 'Biology', 'Computer Science'],
+    'Commerce': ['Accounts', 'Economics', 'Business Studies', 'Mathematics', 'English'],
+    'Arts': ['History', 'Geography', 'Political Science', 'Psychology', 'English', 'Sociology']
+};
+
+function selectStream(stream) {
+    // Remove previous selection
+    document.querySelectorAll('.stream-card').forEach(card => {
+        card.classList.remove('selected');
+    });
+    
+    // Add selection to clicked card
+    event.target.closest('.stream-card').classList.add('selected');
+    
+    // Set hidden input
+    document.getElementById('streamChoice').value = stream;
+    
+    // Show subjects section
+    const subjectsSection = document.getElementById('subjectsSection');
+    const subjectsContainer = document.getElementById('subjectsContainer');
+    
+    subjectsSection.style.display = 'block';
+    subjectsContainer.innerHTML = '';
+    
+    // Add subject checkboxes
+    const subjects = subjectOptions[stream] || [];
+    const row = document.createElement('div');
+    row.className = 'row g-2';
+    
+    subjects.forEach(subject => {
+        const col = document.createElement('div');
+        col.className = 'col-md-4';
+        col.innerHTML = `
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="subjects" value="${subject}" id="${subject.toLowerCase().replace(' ', '_')}">
+                <label class="form-check-label" for="${subject.toLowerCase().replace(' ', '_')}">${subject}</label>
+            </div>
+        `;
+        row.appendChild(col);
+    });
+    
+    subjectsContainer.appendChild(row);
+    
+    // Enable submit button
+    document.getElementById('simulateBtn').disabled = false;
+}
+
+function quickSimulate(stream, subjects) {
+    selectStream(stream);
+    
+    // Select subjects
+    setTimeout(() => {
+        subjects.forEach(subject => {
+            const checkbox = document.getElementById(subject.toLowerCase().replace(' ', '_'));
+            if (checkbox) checkbox.checked = true;
+        });
+    }, 100);
+}
+</script>
+{% endblock %}

@@ -33,7 +33,7 @@
             </button>
             
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
+                <ul class="navbar-nav me-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('index') }}">Home</a>
                     </li>
@@ -46,12 +46,47 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('college_finder') }}">College Finder</a>
                     </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="advancedDropdown" role="button" data-bs-toggle="dropdown">
+                            Advanced Tools
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{{ url_for('advanced.scholarships') }}">Scholarships</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('advanced.exams') }}">Exam Calendar</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('advanced.college_eligibility_checker') }}">Eligibility Checker</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('advanced.career_simulator') }}">Career Simulator</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('advanced.mentorship') }}">AI Mentor</a></li>
+                        </ul>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('about') }}">About</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('contact') }}">Contact</a>
                     </li>
+                </ul>
+                <ul class="navbar-nav">
+                    {% if current_user.is_authenticated %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+                            <i data-feather="user" class="me-1"></i>
+                            {{ current_user.first_name }}
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="{{ url_for('dashboard') }}">Dashboard</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('advanced.notifications') }}">Notifications</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="{{ url_for('auth.logout') }}">Logout</a></li>
+                        </ul>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('auth.login') }}">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-primary ms-2" href="{{ url_for('auth.register') }}">Sign Up</a>
+                    </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>

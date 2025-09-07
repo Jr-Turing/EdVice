@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+
+{% block title %}Scholarships - Career & Education Advisor{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Header -->
+    <div class="row justify-content-center mb-5">
+        <div class="col-lg-8 text-center">
+            <h1 class="display-4 fw-bold mb-4">Government Scholarships</h1>
+            <p class="lead text-muted">Discover funding opportunities for your education based on merit, category, and financial need.</p>
+        </div>
+    </div>
+
+    <!-- Filter Section -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card border-0 bg-light">
+                <div class="card-body p-4">
+                    <form method="GET" class="row g-3">
+                        <div class="col-md-3">
+                            <label for="category" class="form-label fw-semibold">Category</label>
+                            <select class="form-select" id="category" name="category">
+                                <option value="">All Categories</option>
+                                {% for category in categories %}
+                                <option value="{{ category }}" {% if category == current_category %}selected{% endif %}>{{ category }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="class" class="form-label fw-semibold">Education Level</label>
+                            <select class="form-select" id="class" name="class">
+                                <option value="">All Levels</option>
+                                {% for class_level in classes %}
+                                <option value="{{ class_level }}" {% if class_level == current_class %}selected{% endif %}>{{ class_level }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="amount" class="form-label fw-semibold">Amount Range</label>
+                            <select class="form-select" id="amount" name="amount">
+                                <option value="">All Amounts</option>
+                                <option value="low">Up to ₹50,000</option>
+                                <option value="medium">₹50,000 - ₹1,00,000</option>
+                                <option value="high">Above ₹1,00,000</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3 d-flex align-items-end">
+                            <button type="submit" class="btn btn-primary w-100">
+                                <i data-feather="filter" class="me-2"></i>Filter
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scholarships List -->
+    <div class="row g-4">
+        {% for scholarship in scholarships %}
+        <div class="col-lg-6">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <h5 class="fw-bold">{{ scholarship.name }}</h5>
+                        <span class="badge bg-primary">{{ scholarship.amount }}</span>
+                    </div>
+                    
+                    <p class="text-muted mb-3">{{ scholarship.description }}</p>
+                    
+                    <div class="row g-3 mb-3">
+                        <div class="col-6">
+                            <small class="text-muted d-block">Provider</small>
+                            <strong>{{ scholarship.provider }}</strong>
+                        </div>
+                        <div class="col-6">
+                            <small class="text-muted d-block">Deadline</small>
+                            <strong class="text-danger">{{ scholarship.application_deadline.strftime('%d %b %Y') if scholarship.application_deadline else 'Ongoing' }}</strong>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <small class="text-muted d-block mb-2">Eligible Categories</small>
+                        <div class="d-flex flex-wrap gap-1">
+                            {% for category in scholarship.category_eligible|fromjson %}
+                            <span class="badge bg-light text-dark">{{ category }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <small class="text-muted d-block mb-2">Eligibility</small>
+                        <p class="small">{{ scholarship.eligibility_criteria }}</p>
+                    </div>
+                    
+                    <div class="d-flex gap-2">
+                        <a href="{{ scholarship.application_link }}" target="_blank" class="btn btn-primary flex-fill">
+                            <i data-feather="external-link" class="me-1"></i>Apply Now
+                        </a>
+                        <button class="btn btn-outline-secondary" onclick="saveScholarship({{ scholarship.id }})">
+                            <i data-feather="bookmark"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    {% if not scholarships %}
+    <div class="row justify-content-center">
+        <div class="col-lg-6 text-center">
+            <i data-feather="search" class="text-muted mb-3" style="width: 64px; height: 64px;"></i>
+            <h4>No scholarships found</h4>
+            <p class="text-muted">Try adjusting your filters to see more opportunities.</p>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- CTA Section -->
+    <div class="row justify-content-center mt-5">
+        <div class="col-lg-8">
+            <div class="card border-0 bg-gradient-primary text-white">
+                <div class="card-body p-5 text-center">
+                    <h3 class="fw-bold mb-3">Get Personalized Scholarship Recommendations</h3>
+                    <p class="mb-4">Use our AI-powered scholarship matcher to find opportunities tailored to your profile.</p>
+                    <a href="{{ url_for('advanced.scholarship_matcher') }}" class="btn btn-light btn-lg">
+                        <i data-feather="target" class="me-2"></i>Find My Scholarships
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function saveScholarship(scholarshipId) {
+    // Save scholarship logic
+    alert('Scholarship saved to your profile!');
+}
+</script>
+{% endblock %}

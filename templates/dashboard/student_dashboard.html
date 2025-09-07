@@ -1,0 +1,199 @@
+{% extends "base.html" %}
+
+{% block title %}Student Dashboard - Career & Education Advisor{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Welcome Section -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="card border-0 bg-gradient-primary text-white">
+                <div class="card-body p-4">
+                    <div class="row align-items-center">
+                        <div class="col-md-8">
+                            <h2 class="fw-bold mb-2">Welcome, {{ user.first_name }}!</h2>
+                            <p class="mb-0">Ready to explore your career journey? Let's discover the perfect path for your future.</p>
+                        </div>
+                        <div class="col-md-4 text-md-end">
+                            <i data-feather="graduation-cap" style="width: 64px; height: 64px;"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="row g-4 mb-5">
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body text-center p-4">
+                    <i data-feather="clipboard" class="text-primary mb-3" style="width: 48px; height: 48px;"></i>
+                    <h5 class="fw-bold mb-3">Take Quiz</h5>
+                    <p class="text-muted mb-3">Discover your ideal career path</p>
+                    <a href="{{ url_for('quiz') }}" class="btn btn-primary">Start Now</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body text-center p-4">
+                    <i data-feather="search" class="text-success mb-3" style="width: 48px; height: 48px;"></i>
+                    <h5 class="fw-bold mb-3">Find Colleges</h5>
+                    <p class="text-muted mb-3">Search government colleges</p>
+                    <a href="{{ url_for('college_finder') }}" class="btn btn-success">Explore</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body text-center p-4">
+                    <i data-feather="award" class="text-warning mb-3" style="width: 48px; height: 48px;"></i>
+                    <h5 class="fw-bold mb-3">Scholarships</h5>
+                    <p class="text-muted mb-3">Find funding opportunities</p>
+                    <a href="{{ url_for('advanced.scholarship_matcher') }}" class="btn btn-warning">Find Match</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body text-center p-4">
+                    <i data-feather="trending-up" class="text-info mb-3" style="width: 48px; height: 48px;"></i>
+                    <h5 class="fw-bold mb-3">Career Simulator</h5>
+                    <p class="text-muted mb-3">Explore "what-if" scenarios</p>
+                    <a href="{{ url_for('advanced.career_simulator') }}" class="btn btn-info">Simulate</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Personalized Recommendations -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <h3 class="fw-bold mb-4">Personalized for You</h3>
+        </div>
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <h5 class="fw-bold mb-3">
+                        <i data-feather="target" class="text-primary me-2"></i>
+                        Recommended Scholarships
+                    </h5>
+                    {% if user.category %}
+                    <div class="alert alert-info">
+                        <small>Based on your {{ user.category }} category and {{ user.class_level }} level</small>
+                    </div>
+                    {% endif %}
+                    <p class="text-muted">We found scholarships that match your profile:</p>
+                    <ul class="list-unstyled">
+                        <li class="mb-2">
+                            <i data-feather="check-circle" class="text-success me-2" style="width: 16px; height: 16px;"></i>
+                            Merit-based scholarships
+                        </li>
+                        <li class="mb-2">
+                            <i data-feather="check-circle" class="text-success me-2" style="width: 16px; height: 16px;"></i>
+                            Category-specific funding
+                        </li>
+                        <li>
+                            <i data-feather="check-circle" class="text-success me-2" style="width: 16px; height: 16px;"></i>
+                            Government schemes
+                        </li>
+                    </ul>
+                    <a href="{{ url_for('advanced.scholarship_matcher') }}" class="btn btn-outline-primary">View All</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <h5 class="fw-bold mb-3">
+                        <i data-feather="calendar" class="text-warning me-2"></i>
+                        Upcoming Deadlines
+                    </h5>
+                    <div class="timeline">
+                        <div class="timeline-item mb-3">
+                            <div class="timeline-marker bg-primary"></div>
+                            <div class="timeline-content">
+                                <h6 class="mb-1">JEE Main Registration</h6>
+                                <small class="text-muted">Closes in 15 days</small>
+                            </div>
+                        </div>
+                        <div class="timeline-item mb-3">
+                            <div class="timeline-marker bg-success"></div>
+                            <div class="timeline-content">
+                                <h6 class="mb-1">NEET Registration</h6>
+                                <small class="text-muted">Closes in 30 days</small>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-marker bg-info"></div>
+                            <div class="timeline-content">
+                                <h6 class="mb-1">Scholarship Applications</h6>
+                                <small class="text-muted">Multiple deadlines</small>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="{{ url_for('advanced.exams') }}" class="btn btn-outline-warning">View Calendar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Mentor -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card border-0 bg-light">
+                <div class="card-body p-4">
+                    <div class="row align-items-center">
+                        <div class="col-md-8">
+                            <h4 class="fw-bold mb-2">
+                                <i data-feather="message-circle" class="text-primary me-2"></i>
+                                AI Career Mentor
+                            </h4>
+                            <p class="text-muted mb-0">Get instant answers to your career questions, scholarship doubts, and college admission queries.</p>
+                        </div>
+                        <div class="col-md-4 text-md-end">
+                            <a href="{{ url_for('advanced.mentorship') }}" class="btn btn-primary btn-lg">
+                                <i data-feather="message-square" class="me-2"></i>
+                                Chat Now
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.timeline {
+    position: relative;
+    padding-left: 2rem;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 0.5rem;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: #e5e7eb;
+}
+
+.timeline-item {
+    position: relative;
+}
+
+.timeline-marker {
+    position: absolute;
+    left: -2rem;
+    top: 0.25rem;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 2px solid white;
+    box-shadow: 0 0 0 2px currentColor;
+}
+</style>
+{% endblock %}

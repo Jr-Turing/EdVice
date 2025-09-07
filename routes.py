@@ -1,13 +1,50 @@
 from flask import render_template, request, session, redirect, url_for, jsonify
+from flask_login import login_required, current_user
 from app import app, db
-from models import QuizResult, College, Career
+from models import QuizResult, College, Career, User, ParentChildRelation
 from quiz_data import QUIZ_QUESTIONS, analyze_quiz_results
+from auth_routes import auth_bp
+from advanced_routes import advanced_bp
 import json
 import uuid
+
+# Register blueprints
+app.register_blueprint(auth_bp)
+app.register_blueprint(advanced_bp)
 
 @app.route('/')
 def index():
     return render_template('index.html')
+
+@app.route('/dashboard')
+@login_required
+def dashboard():
+    if current_user.role == 'parent':
+        return redirect(url_for('parent_dashboard'))
+    elif current_user.role == 'teacher':
+        return redirect(url_for('teacher_dashboard'))
+    else:
+        return render_template('dashboard/student_dashboard.html', user=current_user)
+
+@app.route('/parent-dashboard')
+@login_required
+def parent_dashboard():
+    if current_user.role != 'parent':
+        return redirect(url_for('dashboard'))
+    
+    # Get linked children
+    children_relations = ParentChildRelation.query.filter_by(parent_id=current_user.id).all()
+    children = [relation.child for relation in children_relations]
+    
+    return render_template('dashboard/parent_dashboard.html', user=current_user, children=children)
+
+@app.route('/teacher-dashboard')
+@login_required
+def teacher_dashboard():
+    if current_user.role != 'teacher':
+        return redirect(url_for('dashboard'))
+    
+    return render_template('dashboard/teacher_dashboard.html', user=current_user)
 
 @app.route('/quiz')
 def quiz():
@@ -59,6 +96,7 @@ def quiz_results():
     
     # Save results to database
     quiz_result = QuizResult(
+        user_id=current_user.id if current_user.is_authenticated else None,
         session_id=session.get('quiz_session_id'),
         answers=json.dumps(session['quiz_answers']),
         career_recommendations=json.dumps(recommendations)

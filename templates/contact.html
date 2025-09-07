@@ -1,0 +1,209 @@
+{% extends "base.html" %}
+
+{% block title %}Contact Us - Career & Education Advisor{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Header -->
+    <div class="row justify-content-center mb-5">
+        <div class="col-lg-8 text-center">
+            <h1 class="display-4 fw-bold mb-4">Contact Us</h1>
+            <p class="lead text-muted">Have questions about careers, scholarships, or colleges? We're here to help you navigate your educational journey.</p>
+        </div>
+    </div>
+
+    <!-- Contact Options -->
+    <div class="row g-4 mb-5">
+        <!-- Contact Form -->
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-lg">
+                <div class="card-body p-5">
+                    <h3 class="fw-bold mb-4">Send us a Message</h3>
+                    <form id="contactForm">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="firstName" class="form-label">First Name *</label>
+                                <input type="text" class="form-control" id="firstName" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="lastName" class="form-label">Last Name *</label>
+                                <input type="text" class="form-control" id="lastName" required>
+                            </div>
+                            <div class="col-12">
+                                <label for="email" class="form-label">Email Address *</label>
+                                <input type="email" class="form-control" id="email" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="phone" class="form-label">Phone Number</label>
+                                <input type="tel" class="form-control" id="phone">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="userType" class="form-label">I am a *</label>
+                                <select class="form-select" id="userType" required>
+                                    <option value="">Select...</option>
+                                    <option value="student">Student</option>
+                                    <option value="parent">Parent</option>
+                                    <option value="teacher">Teacher</option>
+                                    <option value="counselor">Career Counselor</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <label for="subject" class="form-label">Subject *</label>
+                                <select class="form-select" id="subject" required>
+                                    <option value="">Select a topic...</option>
+                                    <option value="career_guidance">Career Guidance</option>
+                                    <option value="scholarships">Scholarships</option>
+                                    <option value="college_admissions">College Admissions</option>
+                                    <option value="technical_support">Technical Support</option>
+                                    <option value="partnership">Partnership Opportunities</option>
+                                    <option value="feedback">Feedback & Suggestions</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <label for="message" class="form-label">Message *</label>
+                                <textarea class="form-control" id="message" rows="5" placeholder="Tell us how we can help you..." required></textarea>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="newsletter">
+                                    <label class="form-check-label" for="newsletter">
+                                        Subscribe to our newsletter for updates on scholarships and career opportunities
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i data-feather="send" class="me-2"></i>
+                                    Send Message
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Information -->
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-body p-4">
+                    <h5 class="fw-bold mb-4">Get in Touch</h5>
+                    
+                    <div class="d-flex align-items-center mb-3">
+                        <i data-feather="mail" class="text-primary me-3" style="width: 20px; height: 20px;"></i>
+                        <div>
+                            <strong>Email</strong><br>
+                            <small class="text-muted">support@careeradvisor.gov.in</small>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex align-items-center mb-3">
+                        <i data-feather="phone" class="text-primary me-3" style="width: 20px; height: 20px;"></i>
+                        <div>
+                            <strong>Helpline</strong><br>
+                            <small class="text-muted">1800-XXX-XXXX (Toll Free)</small>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex align-items-start mb-3">
+                        <i data-feather="clock" class="text-primary me-3 mt-1" style="width: 20px; height: 20px;"></i>
+                        <div>
+                            <strong>Support Hours</strong><br>
+                            <small class="text-muted">Monday - Friday: 9:00 AM - 6:00 PM<br>Saturday: 10:00 AM - 4:00 PM</small>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex align-items-start">
+                        <i data-feather="map-pin" class="text-primary me-3 mt-1" style="width: 20px; height: 20px;"></i>
+                        <div>
+                            <strong>Address</strong><br>
+                            <small class="text-muted">Ministry of Education<br>Shastri Bhawan, New Delhi<br>India - 110001</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ Section -->
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <h5 class="fw-bold mb-4">Quick Help</h5>
+                    
+                    <div class="mb-3">
+                        <h6 class="fw-semibold">Frequently Asked Questions</h6>
+                        <ul class="list-unstyled">
+                            <li><small><a href="#" class="text-decoration-none">How to check scholarship eligibility?</a></small></li>
+                            <li><small><a href="#" class="text-decoration-none">What are government college admission criteria?</a></small></li>
+                            <li><small><a href="#" class="text-decoration-none">How to use the career simulator?</a></small></li>
+                            <li><small><a href="#" class="text-decoration-none">Category certificate requirements</a></small></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h6 class="fw-semibold">Resources</h6>
+                        <ul class="list-unstyled">
+                            <li><small><a href="#" class="text-decoration-none">Download User Guide</a></small></li>
+                            <li><small><a href="#" class="text-decoration-none">Video Tutorials</a></small></li>
+                            <li><small><a href="#" class="text-decoration-none">Career Guidance PDF</a></small></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Alternative Contact Methods -->
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card border-0 bg-light">
+                <div class="card-body p-5">
+                    <div class="row align-items-center">
+                        <div class="col-lg-8">
+                            <h4 class="fw-bold mb-3">Need Immediate Assistance?</h4>
+                            <p class="text-muted mb-0">For urgent career guidance or scholarship deadlines, you can reach out to our AI mentor for instant help or schedule a session with our human counselors.</p>
+                        </div>
+                        <div class="col-lg-4 text-lg-end">
+                            <a href="{{ url_for('advanced.mentorship') }}" class="btn btn-primary btn-lg me-2">
+                                <i data-feather="message-circle" class="me-2"></i>
+                                Chat with AI Mentor
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // Simple form validation and submission
+    const formData = {
+        firstName: document.getElementById('firstName').value,
+        lastName: document.getElementById('lastName').value,
+        email: document.getElementById('email').value,
+        phone: document.getElementById('phone').value,
+        userType: document.getElementById('userType').value,
+        subject: document.getElementById('subject').value,
+        message: document.getElementById('message').value,
+        newsletter: document.getElementById('newsletter').checked
+    };
+    
+    // Simulate form submission
+    const submitBtn = e.target.querySelector('button[type="submit"]');
+    const originalText = submitBtn.innerHTML;
+    submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Sending...';
+    submitBtn.disabled = true;
+    
+    setTimeout(() => {
+        alert('Thank you for your message! We will get back to you within 24 hours.');
+        e.target.reset();
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+    }, 2000);
+});
+</script>
+{% endblock %}
