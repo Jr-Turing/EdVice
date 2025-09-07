@@ -1,0 +1,81 @@
+"Build a modern, student-friendly web application called Career & Education Advisor. The purpose is to guide Class 10 and 12 students in making informed career decisions, with a focus on government colleges. The site should be built in React + TailwindCSS, mobile responsive, and visually engaging with cards, grids, and clean typography."
+
+🔑 Requirements
+
+Landing Page / Home
+
+Hero section with a bold tagline: “One-Stop Personalized Career & Education Guidance”.
+
+Brief problem intro: students confused about streams, careers, and government college options.
+
+Call-to-action button → Start Aptitude Quiz.
+
+Aptitude Quiz Module
+
+15–20 psychometric questions (MCQs, Yes/No, Likert scale).
+
+Simple, one-question-at-a-time UI.
+
+Progress tracker (e.g., “Question 3 of 20”).
+
+Save answers in local state.
+
+Results & Recommendations Page
+
+Show top 3–5 career clusters (e.g., Engineering, Education, Arts, Healthcare, Business).
+
+Each recommendation displayed in a card with icons, short description, and suggested govt. courses/colleges.
+
+Button: Explore More → leads to Career Explorer page.
+
+Career Path Explorer
+
+Flowchart/visual card view: Degree → Job Roles → Salary Band → Growth Opportunities.
+
+Example: B.Sc. Computer Science → Software Developer → ₹5–12 LPA → Upskill to AI Engineer.
+
+College Finder
+
+Searchable directory of government colleges.
+
+Filters: State, Stream, Course, Fees, Facilities.
+
+Display results in grid/table with key info (cut-offs, seats, scholarships).
+
+Personal Dashboard (Optional MVP)
+
+Student login/signup.
+
+Save quiz results + favorite colleges.
+
+Scholarship reminders & notifications.
+
+Design & Accessibility
+
+Use cards, badges, progress bars, and icons (Lucide/Feather).
+
+Multilingual support placeholder (English + Hindi).
+
+Offline-first capability for rural students (cache quiz + guides).
+
+Footer
+
+Govt. initiative branding: “Supported by Digital India & Ministry of Education”.
+
+Contact / About / Social icons.
+
+💡 Innovation Add-ons (Optional for hackathon wow factor)
+
+AI-powered chatbot to answer career FAQs.
+
+Gamification → quiz completion badges.
+
+Downloadable awareness posters for schools.
+
+🎨 Style Guide
+
+Font: Inter / Poppins (modern, clean).
+
+Colors: Blue (#2563eb), White (#ffffff), Gray (#f9fafb), accents of Green (#16a34a).
+
+Layout: Grid-based, soft shadows, rounded corners.
