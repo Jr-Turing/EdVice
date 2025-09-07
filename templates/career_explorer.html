@@ -1,0 +1,344 @@
+{% extends "base.html" %}
+
+{% block title %}Career Explorer - Career & Education Advisor{% endblock %}
+
+{% block extra_head %}
+<style>
+    .career-card {
+        transition: all 0.3s ease;
+        border: none;
+        height: 100%;
+    }
+    .career-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+    }
+    .career-header {
+        background: linear-gradient(135deg, #f8faff 0%, #e0f2fe 100%);
+        border-bottom: 1px solid #e5e7eb;
+    }
+    .career-icon {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1rem;
+    }
+    .tech-icon { background: linear-gradient(135deg, #2563eb, #1e40af); }
+    .health-icon { background: linear-gradient(135deg, #dc2626, #b91c1c); }
+    .gov-icon { background: linear-gradient(135deg, #059669, #047857); }
+    .edu-icon { background: linear-gradient(135deg, #7c3aed, #6d28d9); }
+    .biz-icon { background: linear-gradient(135deg, #ea580c, #dc2626); }
+    
+    .career-flow {
+        background: linear-gradient(90deg, #f8faff, #e0f2fe, #f0fdf4, #fef3c7);
+        border-radius: 15px;
+        padding: 2rem;
+        margin: 2rem 0;
+    }
+    .flow-step {
+        text-align: center;
+        position: relative;
+    }
+    .flow-step:not(:last-child)::after {
+        content: '→';
+        position: absolute;
+        right: -2rem;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 1.5rem;
+        color: #6b7280;
+        font-weight: bold;
+    }
+    .flow-icon {
+        width: 48px;
+        height: 48px;
+        background: white;
+        border: 3px solid #2563eb;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1rem auto;
+    }
+    .skill-badge {
+        display: inline-block;
+        background: linear-gradient(45deg, #2563eb, #16a34a);
+        color: white;
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.875rem;
+        margin: 0.25rem;
+    }
+    .filter-section {
+        background: #f8faff;
+        border-radius: 15px;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Header Section -->
+    <div class="row justify-content-center mb-5">
+        <div class="col-lg-8 text-center">
+            <h1 class="display-4 fw-bold mb-4">Career Path Explorer</h1>
+            <p class="lead text-muted">Discover detailed career roadmaps, from education to professional growth. Visualize your journey from degree to dream job.</p>
+        </div>
+    </div>
+
+    <!-- Filter Section -->
+    <div class="filter-section">
+        <div class="row align-items-center">
+            <div class="col-md-3">
+                <h6 class="fw-semibold mb-3 mb-md-0">Filter by Category:</h6>
+            </div>
+            <div class="col-md-9">
+                <div class="d-flex flex-wrap gap-2">
+                    <button class="btn btn-outline-primary active" onclick="filterCareers('all')">All Careers</button>
+                    <button class="btn btn-outline-primary" onclick="filterCareers('Technology')">Technology</button>
+                    <button class="btn btn-outline-primary" onclick="filterCareers('Healthcare')">Healthcare</button>
+                    <button class="btn btn-outline-primary" onclick="filterCareers('Government')">Government</button>
+                    <button class="btn btn-outline-primary" onclick="filterCareers('Education')">Education</button>
+                    <button class="btn btn-outline-primary" onclick="filterCareers('Business')">Business</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Career Cards Grid -->
+    <div class="row g-4" id="careerGrid">
+        {% for career in careers %}
+        <div class="col-lg-6 career-item" data-category="{{ career.category }}">
+            <div class="card career-card shadow-sm">
+                <!-- Career Header -->
+                <div class="career-header p-4">
+                    <div class="d-flex align-items-center">
+                        <div class="career-icon 
+                            {% if career.category == 'Technology' %}tech-icon
+                            {% elif career.category == 'Healthcare' %}health-icon
+                            {% elif career.category == 'Government' %}gov-icon
+                            {% elif career.category == 'Education' %}edu-icon
+                            {% elif career.category == 'Business' %}biz-icon
+                            {% endif %}">
+                            {% if career.category == 'Technology' %}
+                            <i data-feather="cpu" class="text-white" style="width: 28px; height: 28px;"></i>
+                            {% elif career.category == 'Healthcare' %}
+                            <i data-feather="heart" class="text-white" style="width: 28px; height: 28px;"></i>
+                            {% elif career.category == 'Government' %}
+                            <i data-feather="flag" class="text-white" style="width: 28px; height: 28px;"></i>
+                            {% elif career.category == 'Education' %}
+                            <i data-feather="book-open" class="text-white" style="width: 28px; height: 28px;"></i>
+                            {% elif career.category == 'Business' %}
+                            <i data-feather="briefcase" class="text-white" style="width: 28px; height: 28px;"></i>
+                            {% endif %}
+                        </div>
+                        <div class="ms-3">
+                            <h4 class="fw-bold mb-1">{{ career.name }}</h4>
+                            <span class="badge bg-primary">{{ career.category }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body p-4">
+                    <!-- Description -->
+                    <p class="text-muted mb-4">{{ career.description }}</p>
+
+                    <!-- Career Flow -->
+                    <div class="career-flow">
+                        <h6 class="fw-semibold mb-3 text-center">Career Progression Path</h6>
+                        <div class="row align-items-center">
+                            <div class="col-3 flow-step">
+                                <div class="flow-icon">
+                                    <i data-feather="book" class="text-primary" style="width: 20px; height: 20px;"></i>
+                                </div>
+                                <h6 class="fw-semibold">Education</h6>
+                                <small class="text-muted">{{ career.required_education[:30] }}...</small>
+                            </div>
+                            <div class="col-3 flow-step">
+                                <div class="flow-icon">
+                                    <i data-feather="user" class="text-primary" style="width: 20px; height: 20px;"></i>
+                                </div>
+                                <h6 class="fw-semibold">Entry Level</h6>
+                                <small class="text-muted">{{ career.job_roles[0] if career.job_roles else 'Junior Role' }}</small>
+                            </div>
+                            <div class="col-3 flow-step">
+                                <div class="flow-icon">
+                                    <i data-feather="dollar-sign" class="text-primary" style="width: 20px; height: 20px;"></i>
+                                </div>
+                                <h6 class="fw-semibold">Salary</h6>
+                                <small class="text-muted">{{ career.salary_range }}</small>
+                            </div>
+                            <div class="col-3 flow-step">
+                                <div class="flow-icon">
+                                    <i data-feather="trending-up" class="text-primary" style="width: 20px; height: 20px;"></i>
+                                </div>
+                                <h6 class="fw-semibold">Growth</h6>
+                                <small class="text-muted">Leadership Roles</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Job Roles -->
+                    <div class="mb-4">
+                        <h6 class="fw-semibold mb-3">
+                            <i data-feather="briefcase" class="me-2" style="width: 16px; height: 16px;"></i>
+                            Possible Job Roles
+                        </h6>
+                        <div class="d-flex flex-wrap gap-2">
+                            {% for role in career.job_roles %}
+                            <span class="badge bg-light text-dark">{{ role }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <!-- Skills Required -->
+                    {% if career.skills_required %}
+                    <div class="mb-4">
+                        <h6 class="fw-semibold mb-3">
+                            <i data-feather="star" class="me-2" style="width: 16px; height: 16px;"></i>
+                            Key Skills Required
+                        </h6>
+                        <div>
+                            {% for skill in career.skills_required %}
+                            <span class="skill-badge">{{ skill }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <!-- Growth Opportunities -->
+                    {% if career.growth_opportunities %}
+                    <div class="mb-4">
+                        <h6 class="fw-semibold mb-2">
+                            <i data-feather="arrow-up-right" class="me-2" style="width: 16px; height: 16px;"></i>
+                            Career Growth Path
+                        </h6>
+                        <p class="text-muted small">{{ career.growth_opportunities }}</p>
+                    </div>
+                    {% endif %}
+
+                    <!-- Action Buttons -->
+                    <div class="d-flex gap-2">
+                        <a href="{{ url_for('college_finder') }}?type={{ career.category }}" class="btn btn-primary btn-sm flex-fill">
+                            <i data-feather="search" class="me-1" style="width: 14px; height: 14px;"></i>
+                            Find Colleges
+                        </a>
+                        <a href="{{ url_for('quiz') }}" class="btn btn-outline-secondary btn-sm flex-fill">
+                            <i data-feather="clipboard" class="me-1" style="width: 14px; height: 14px;"></i>
+                            Take Quiz
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- No Results Message -->
+    <div id="noResults" class="text-center py-5" style="display: none;">
+        <i data-feather="search" class="text-muted mb-3" style="width: 64px; height: 64px;"></i>
+        <h4 class="text-muted">No careers found for this category</h4>
+        <p class="text-muted">Try selecting a different category filter.</p>
+    </div>
+
+    <!-- Additional Resources -->
+    <div class="row justify-content-center mt-5">
+        <div class="col-lg-8">
+            <div class="card border-0 bg-gradient-primary text-white">
+                <div class="card-body p-5 text-center">
+                    <h3 class="fw-bold mb-3">Need Personalized Guidance?</h3>
+                    <p class="mb-4">Take our comprehensive aptitude quiz to get career recommendations tailored specifically to your interests and skills.</p>
+                    <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center">
+                        <a href="{{ url_for('quiz') }}" class="btn btn-light btn-lg px-4">
+                            <i data-feather="play-circle" class="me-2"></i>
+                            Take Aptitude Quiz
+                        </a>
+                        <a href="{{ url_for('college_finder') }}" class="btn btn-outline-light btn-lg px-4">
+                            <i data-feather="map-pin" class="me-2"></i>
+                            Explore Colleges
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+function filterCareers(category) {
+    const careerItems = document.querySelectorAll('.career-item');
+    const filterButtons = document.querySelectorAll('.filter-section button');
+    const noResults = document.getElementById('noResults');
+    
+    // Update active button
+    filterButtons.forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+    
+    let visibleCount = 0;
+    
+    careerItems.forEach(item => {
+        if (category === 'all' || item.dataset.category === category) {
+            item.style.display = 'block';
+            visibleCount++;
+        } else {
+            item.style.display = 'none';
+        }
+    });
+    
+    // Show/hide no results message
+    if (visibleCount === 0) {
+        noResults.style.display = 'block';
+    } else {
+        noResults.style.display = 'none';
+    }
+}
+
+// Animate cards on load
+document.addEventListener('DOMContentLoaded', function() {
+    const cards = document.querySelectorAll('.career-card');
+    cards.forEach((card, index) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(30px)';
+        
+        setTimeout(() => {
+            card.style.transition = 'all 0.6s ease';
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+        }, index * 150);
+    });
+});
+
+// Search functionality
+function searchCareers() {
+    const searchTerm = document.getElementById('careerSearch').value.toLowerCase();
+    const careerItems = document.querySelectorAll('.career-item');
+    let visibleCount = 0;
+    
+    careerItems.forEach(item => {
+        const careerName = item.querySelector('h4').textContent.toLowerCase();
+        const careerDesc = item.querySelector('.text-muted').textContent.toLowerCase();
+        
+        if (careerName.includes(searchTerm) || careerDesc.includes(searchTerm)) {
+            item.style.display = 'block';
+            visibleCount++;
+        } else {
+            item.style.display = 'none';
+        }
+    });
+    
+    const noResults = document.getElementById('noResults');
+    if (visibleCount === 0 && searchTerm !== '') {
+        noResults.style.display = 'block';
+    } else {
+        noResults.style.display = 'none';
+    }
+}
+</script>
+{% endblock %}

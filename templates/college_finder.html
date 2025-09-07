@@ -1,0 +1,373 @@
+{% extends "base.html" %}
+
+{% block title %}College Finder - Career & Education Advisor{% endblock %}
+
+{% block extra_head %}
+<style>
+    .college-card {
+        transition: all 0.3s ease;
+        border: none;
+        height: 100%;
+    }
+    .college-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+    .college-header {
+        background: linear-gradient(135deg, #f8faff 0%, #e0f2fe 100%);
+        border-bottom: 1px solid #e5e7eb;
+    }
+    .college-type-badge {
+        font-size: 0.75rem;
+        padding: 0.25rem 0.75rem;
+        border-radius: 12px;
+    }
+    .facility-icon {
+        width: 20px;
+        height: 20px;
+        color: #16a34a;
+    }
+    .filter-card {
+        background: #f8faff;
+        border: 1px solid #e0e7ff;
+        border-radius: 12px;
+    }
+    .search-box {
+        border-radius: 25px;
+        border: 2px solid #e5e7eb;
+        padding: 0.75rem 1.25rem;
+        transition: border-color 0.3s ease;
+    }
+    .search-box:focus {
+        border-color: #2563eb;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+    .stats-card {
+        background: linear-gradient(135deg, #2563eb, #1e40af);
+        color: white;
+        border-radius: 15px;
+        padding: 1.5rem;
+        text-align: center;
+    }
+    .no-results {
+        background: #f9fafb;
+        border-radius: 15px;
+        padding: 3rem;
+        text-align: center;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Header Section -->
+    <div class="row justify-content-center mb-5">
+        <div class="col-lg-8 text-center">
+            <h1 class="display-4 fw-bold mb-4">Government College Finder</h1>
+            <p class="lead text-muted">Discover the best government colleges across India with detailed information about courses, fees, facilities, and admission requirements.</p>
+        </div>
+    </div>
+
+    <!-- Search and Filters -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="card filter-card">
+                <div class="card-body p-4">
+                    <form method="GET" action="{{ url_for('college_finder') }}" id="filterForm">
+                        <div class="row g-3 align-items-end">
+                            <div class="col-md-4">
+                                <label for="search" class="form-label fw-semibold">Search Colleges</label>
+                                <div class="position-relative">
+                                    <input type="text" 
+                                           class="form-control search-box" 
+                                           id="search" 
+                                           name="search" 
+                                           placeholder="Enter college name..." 
+                                           value="{{ current_search }}">
+                                    <i data-feather="search" class="position-absolute top-50 end-0 translate-middle-y me-3" style="width: 20px; height: 20px;"></i>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="state" class="form-label fw-semibold">State</label>
+                                <select class="form-select" id="state" name="state">
+                                    <option value="">All States</option>
+                                    {% for state in states %}
+                                    <option value="{{ state }}" {% if state == current_state %}selected{% endif %}>{{ state }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="type" class="form-label fw-semibold">Type</label>
+                                <select class="form-select" id="type" name="type">
+                                    <option value="">All Types</option>
+                                    {% for type in types %}
+                                    <option value="{{ type }}" {% if type == current_type %}selected{% endif %}>{{ type }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <button type="submit" class="btn btn-primary w-100">
+                                    <i data-feather="filter" class="me-2" style="width: 16px; height: 16px;"></i>
+                                    Filter
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Results Count -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Found {{ colleges|length }} colleges</h5>
+                <div class="d-flex gap-2">
+                    <button class="btn btn-outline-secondary btn-sm" onclick="clearFilters()">
+                        <i data-feather="x" class="me-1" style="width: 14px; height: 14px;"></i>
+                        Clear Filters
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if colleges %}
+    <!-- Colleges Grid -->
+    <div class="row g-4">
+        {% for college in colleges %}
+        <div class="col-lg-6">
+            <div class="card college-card shadow-sm">
+                <!-- College Header -->
+                <div class="college-header p-4">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div>
+                            <h5 class="fw-bold mb-2">{{ college.name }}</h5>
+                            <div class="d-flex align-items-center gap-2 mb-2">
+                                <i data-feather="map-pin" class="text-muted" style="width: 16px; height: 16px;"></i>
+                                <span class="text-muted">{{ college.city }}, {{ college.state }}</span>
+                            </div>
+                        </div>
+                        <span class="badge bg-primary college-type-badge">{{ college.type }}</span>
+                    </div>
+                </div>
+
+                <div class="card-body p-4">
+                    <!-- Quick Stats -->
+                    <div class="row g-3 mb-4">
+                        <div class="col-6">
+                            <div class="text-center">
+                                <i data-feather="users" class="text-primary mb-2" style="width: 24px; height: 24px;"></i>
+                                <div class="fw-bold">{{ college.seats }}</div>
+                                <small class="text-muted">Total Seats</small>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="text-center">
+                                <i data-feather="dollar-sign" class="text-success mb-2" style="width: 24px; height: 24px;"></i>
+                                <div class="fw-bold">{{ college.fees_range }}</div>
+                                <small class="text-muted">Fee Range</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Courses -->
+                    <div class="mb-4">
+                        <h6 class="fw-semibold mb-3">
+                            <i data-feather="book" class="me-2" style="width: 16px; height: 16px;"></i>
+                            Available Courses
+                        </h6>
+                        <div class="d-flex flex-wrap gap-2">
+                            {% for course in college.courses[:4] %}
+                            <span class="badge bg-light text-dark">{{ course }}</span>
+                            {% endfor %}
+                            {% if college.courses|length > 4 %}
+                            <span class="badge bg-secondary">+{{ college.courses|length - 4 }} more</span>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- Facilities -->
+                    <div class="mb-4">
+                        <h6 class="fw-semibold mb-3">
+                            <i data-feather="home" class="me-2" style="width: 16px; height: 16px;"></i>
+                            Facilities
+                        </h6>
+                        <div class="row g-2">
+                            {% for facility in college.facilities[:6] %}
+                            <div class="col-6">
+                                <div class="d-flex align-items-center">
+                                    <i data-feather="check-circle" class="facility-icon me-2"></i>
+                                    <small>{{ facility }}</small>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <!-- Admission Info -->
+                    {% if college.cutoff_info %}
+                    <div class="mb-4">
+                        <h6 class="fw-semibold mb-2">
+                            <i data-feather="trending-up" class="me-2" style="width: 16px; height: 16px;"></i>
+                            Admission Requirements
+                        </h6>
+                        <p class="text-muted small mb-0">{{ college.cutoff_info }}</p>
+                    </div>
+                    {% endif %}
+
+                    <!-- Scholarships -->
+                    {% if college.scholarships %}
+                    <div class="mb-4">
+                        <h6 class="fw-semibold mb-2">
+                            <i data-feather="award" class="me-2" style="width: 16px; height: 16px;"></i>
+                            Scholarships
+                        </h6>
+                        <p class="text-muted small mb-0">{{ college.scholarships }}</p>
+                    </div>
+                    {% endif %}
+
+                    <!-- Action Buttons -->
+                    <div class="d-flex gap-2">
+                        {% if college.website %}
+                        <a href="{{ college.website }}" target="_blank" class="btn btn-primary btn-sm flex-fill">
+                            <i data-feather="external-link" class="me-1" style="width: 14px; height: 14px;"></i>
+                            Visit Website
+                        </a>
+                        {% endif %}
+                        <button class="btn btn-outline-secondary btn-sm flex-fill" onclick="saveCollege({{ college.id }})">
+                            <i data-feather="bookmark" class="me-1" style="width: 14px; height: 14px;"></i>
+                            Save
+                        </button>
+                        <button class="btn btn-outline-info btn-sm" onclick="shareCollege('{{ college.name }}')">
+                            <i data-feather="share-2" style="width: 14px; height: 14px;"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Load More Button (if needed) -->
+    <div class="row mt-5">
+        <div class="col-12 text-center">
+            <p class="text-muted">Showing all {{ colleges|length }} results</p>
+        </div>
+    </div>
+
+    {% else %}
+    <!-- No Results -->
+    <div class="no-results">
+        <i data-feather="search" class="text-muted mb-4" style="width: 64px; height: 64px;"></i>
+        <h3 class="fw-bold mb-3">No Colleges Found</h3>
+        <p class="text-muted mb-4">We couldn't find any colleges matching your search criteria. Try adjusting your filters or search terms.</p>
+        <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center">
+            <button class="btn btn-primary" onclick="clearFilters()">
+                <i data-feather="refresh-cw" class="me-2"></i>
+                Clear All Filters
+            </button>
+            <a href="{{ url_for('quiz') }}" class="btn btn-outline-secondary">
+                <i data-feather="compass" class="me-2"></i>
+                Find Your Career Path
+            </a>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Quick Actions -->
+    <div class="row justify-content-center mt-5">
+        <div class="col-lg-8">
+            <div class="card border-0 bg-gradient-primary text-white">
+                <div class="card-body p-5 text-center">
+                    <h3 class="fw-bold mb-3">Not Sure Which College is Right for You?</h3>
+                    <p class="mb-4">Take our career aptitude quiz to get personalized college recommendations based on your interests and career goals.</p>
+                    <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center">
+                        <a href="{{ url_for('quiz') }}" class="btn btn-light btn-lg px-4">
+                            <i data-feather="clipboard" class="me-2"></i>
+                            Take Career Quiz
+                        </a>
+                        <a href="{{ url_for('career_explorer') }}" class="btn btn-outline-light btn-lg px-4">
+                            <i data-feather="map" class="me-2"></i>
+                            Explore Careers
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{{ url_for('static', filename='js/college_finder.js') }}"></script>
+<script>
+function clearFilters() {
+    document.getElementById('search').value = '';
+    document.getElementById('state').value = '';
+    document.getElementById('type').value = '';
+    document.getElementById('filterForm').submit();
+}
+
+function saveCollege(collegeId) {
+    // Save to localStorage for now (could be enhanced with user accounts)
+    let savedColleges = JSON.parse(localStorage.getItem('savedColleges') || '[]');
+    if (!savedColleges.includes(collegeId)) {
+        savedColleges.push(collegeId);
+        localStorage.setItem('savedColleges', JSON.stringify(savedColleges));
+        
+        // Show feedback
+        event.target.innerHTML = '<i data-feather="check" class="me-1" style="width: 14px; height: 14px;"></i>Saved';
+        event.target.classList.remove('btn-outline-secondary');
+        event.target.classList.add('btn-success');
+        feather.replace();
+        
+        setTimeout(() => {
+            event.target.innerHTML = '<i data-feather="bookmark" class="me-1" style="width: 14px; height: 14px;"></i>Save';
+            event.target.classList.remove('btn-success');
+            event.target.classList.add('btn-outline-secondary');
+            feather.replace();
+        }, 2000);
+    }
+}
+
+function shareCollege(collegeName) {
+    if (navigator.share) {
+        navigator.share({
+            title: collegeName,
+            text: `Check out ${collegeName} - found on Career & Education Advisor`,
+            url: window.location.href
+        });
+    } else {
+        // Fallback: copy to clipboard
+        navigator.clipboard.writeText(`${collegeName} - ${window.location.href}`);
+        alert('College information copied to clipboard!');
+    }
+}
+
+// Auto-submit form on filter change
+document.getElementById('state').addEventListener('change', function() {
+    document.getElementById('filterForm').submit();
+});
+
+document.getElementById('type').addEventListener('change', function() {
+    document.getElementById('filterForm').submit();
+});
+
+// Animate cards on load
+document.addEventListener('DOMContentLoaded', function() {
+    const cards = document.querySelectorAll('.college-card');
+    cards.forEach((card, index) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(30px)';
+        
+        setTimeout(() => {
+            card.style.transition = 'all 0.6s ease';
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+        }, index * 100);
+    });
+});
+</script>
+{% endblock %}

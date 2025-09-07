@@ -1,0 +1,254 @@
+{% extends "base.html" %}
+
+{% block title %}Quiz Results - Career & Education Advisor{% endblock %}
+
+{% block extra_head %}
+<style>
+    .result-card {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        border: none;
+        height: 100%;
+    }
+    .result-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+    .match-percentage {
+        font-size: 2.5rem;
+        font-weight: 700;
+        background: linear-gradient(45deg, #2563eb, #16a34a);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    .career-icon {
+        width: 64px;
+        height: 64px;
+        background: linear-gradient(135deg, #2563eb, #16a34a);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1rem auto;
+    }
+    .progress-ring {
+        width: 120px;
+        height: 120px;
+        position: relative;
+    }
+    .progress-ring-circle {
+        stroke-width: 8;
+        fill: transparent;
+        stroke: #e5e7eb;
+    }
+    .progress-ring-progress {
+        stroke-width: 8;
+        fill: transparent;
+        stroke: #2563eb;
+        stroke-linecap: round;
+        transform: rotate(-90deg);
+        transform-origin: 50% 50%;
+        transition: stroke-dasharray 0.3s ease;
+    }
+    .celebration-animation {
+        animation: celebrateScale 0.6s ease-out;
+    }
+    @keyframes celebrateScale {
+        0% { transform: scale(0.8); opacity: 0; }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); opacity: 1; }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Results Header -->
+    <div class="row justify-content-center mb-5">
+        <div class="col-lg-8 text-center">
+            <div class="celebration-animation">
+                <h1 class="display-4 fw-bold mb-4">🎉 Your Career Recommendations</h1>
+                <p class="lead text-muted">Based on your responses, we've identified the career paths that best match your interests, skills, and preferences.</p>
+            </div>
+        </div>
+    </div>
+
+    {% if recommendations %}
+    <!-- Top Recommendation -->
+    <div class="row justify-content-center mb-5">
+        <div class="col-lg-10">
+            <div class="card border-0 shadow-lg bg-gradient-primary text-white">
+                <div class="card-body p-5">
+                    <div class="row align-items-center">
+                        <div class="col-md-8">
+                            <div class="d-flex align-items-center mb-3">
+                                <i data-feather="award" class="me-3" style="width: 32px; height: 32px;"></i>
+                                <h4 class="mb-0">Your Top Career Match</h4>
+                            </div>
+                            <h2 class="display-6 fw-bold mb-3">{{ recommendations[0].name }}</h2>
+                            <p class="mb-3">{{ recommendations[0].description }}</p>
+                            <div class="d-flex flex-wrap gap-2">
+                                {% for role in recommendations[0].job_roles[:3] %}
+                                <span class="badge bg-light text-dark px-3 py-2">{{ role }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="col-md-4 text-center">
+                            <div class="match-percentage text-white">{{ recommendations[0].match_percentage }}%</div>
+                            <p class="mb-0">Match Score</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- All Recommendations -->
+    <div class="row g-4 mb-5">
+        {% for career in recommendations %}
+        <div class="col-lg-6">
+            <div class="card result-card shadow-sm h-100">
+                <div class="card-body p-4">
+                    <div class="text-center mb-4">
+                        <div class="career-icon">
+                            {% if career.category == 'Technology' %}
+                            <i data-feather="cpu" class="text-white" style="width: 32px; height: 32px;"></i>
+                            {% elif career.category == 'Healthcare' %}
+                            <i data-feather="heart" class="text-white" style="width: 32px; height: 32px;"></i>
+                            {% elif career.category == 'Government' %}
+                            <i data-feather="flag" class="text-white" style="width: 32px; height: 32px;"></i>
+                            {% elif career.category == 'Education' %}
+                            <i data-feather="book-open" class="text-white" style="width: 32px; height: 32px;"></i>
+                            {% elif career.category == 'Business' %}
+                            <i data-feather="briefcase" class="text-white" style="width: 32px; height: 32px;"></i>
+                            {% else %}
+                            <i data-feather="star" class="text-white" style="width: 32px; height: 32px;"></i>
+                            {% endif %}
+                        </div>
+                        <h5 class="fw-bold mb-2">{{ career.name }}</h5>
+                        <div class="match-percentage">{{ career.match_percentage }}%</div>
+                        <small class="text-muted">Match Score</small>
+                    </div>
+                    
+                    <p class="text-muted mb-3">{{ career.description }}</p>
+                    
+                    <div class="mb-3">
+                        <h6 class="fw-semibold mb-2">
+                            <i data-feather="briefcase" class="me-2" style="width: 16px; height: 16px;"></i>
+                            Career Opportunities
+                        </h6>
+                        <div class="d-flex flex-wrap gap-1">
+                            {% for role in career.job_roles %}
+                            <span class="badge bg-light text-dark">{{ role }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    
+                    {% if career.salary_range %}
+                    <div class="mb-3">
+                        <h6 class="fw-semibold mb-2">
+                            <i data-feather="dollar-sign" class="me-2" style="width: 16px; height: 16px;"></i>
+                            Salary Range
+                        </h6>
+                        <span class="text-success fw-semibold">{{ career.salary_range }}</span>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="row justify-content-center">
+        <div class="col-lg-8 text-center">
+            <div class="card border-0 bg-light">
+                <div class="card-body p-4">
+                    <h5 class="fw-bold mb-3">Ready to Explore Your Career Path?</h5>
+                    <p class="text-muted mb-4">Discover detailed career roadmaps and find the right colleges for your chosen path.</p>
+                    <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center">
+                        <a href="{{ url_for('career_explorer') }}" class="btn btn-primary btn-lg px-4">
+                            <i data-feather="map" class="me-2"></i>
+                            Explore Career Paths
+                        </a>
+                        <a href="{{ url_for('college_finder') }}" class="btn btn-success btn-lg px-4">
+                            <i data-feather="search" class="me-2"></i>
+                            Find Colleges
+                        </a>
+                        <a href="{{ url_for('quiz') }}" class="btn btn-outline-secondary btn-lg px-4">
+                            <i data-feather="refresh-cw" class="me-2"></i>
+                            Retake Quiz
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% else %}
+    <!-- No Results -->
+    <div class="row justify-content-center">
+        <div class="col-lg-6 text-center">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-5">
+                    <i data-feather="alert-circle" class="text-warning mb-4" style="width: 64px; height: 64px;"></i>
+                    <h4 class="fw-bold mb-3">No Quiz Results Found</h4>
+                    <p class="text-muted mb-4">It looks like you haven't completed the aptitude quiz yet. Take our comprehensive assessment to get personalized career recommendations.</p>
+                    <a href="{{ url_for('quiz') }}" class="btn btn-primary btn-lg">
+                        <i data-feather="play" class="me-2"></i>
+                        Take Aptitude Quiz
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+// Add celebration effects
+document.addEventListener('DOMContentLoaded', function() {
+    // Animate progress rings
+    const progressRings = document.querySelectorAll('.progress-ring-progress');
+    progressRings.forEach(ring => {
+        const percentage = ring.dataset.percentage;
+        const circumference = 2 * Math.PI * 54; // radius = 54
+        const strokeDasharray = `${percentage / 100 * circumference} ${circumference}`;
+        
+        setTimeout(() => {
+            ring.style.strokeDasharray = strokeDasharray;
+        }, 500);
+    });
+    
+    // Add stagger animation to cards
+    const cards = document.querySelectorAll('.result-card');
+    cards.forEach((card, index) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        
+        setTimeout(() => {
+            card.style.transition = 'all 0.5s ease';
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+        }, index * 200 + 800);
+    });
+});
+
+// Share results functionality
+function shareResults() {
+    if (navigator.share) {
+        navigator.share({
+            title: 'My Career Assessment Results',
+            text: 'I just discovered my ideal career paths with Career & Education Advisor!',
+            url: window.location.href
+        });
+    } else {
+        // Fallback: copy to clipboard
+        navigator.clipboard.writeText(window.location.href);
+        alert('Results link copied to clipboard!');
+    }
+}
+</script>
+{% endblock %}

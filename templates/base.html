@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Career & Education Advisor{% endblock %}</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Feather Icons -->
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold text-primary" href="{{ url_for('index') }}">
+                <i data-feather="book-open" class="me-2"></i>
+                Career & Education Advisor
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('index') }}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('quiz') }}">Aptitude Quiz</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('career_explorer') }}">Career Explorer</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('college_finder') }}">College Finder</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('about') }}">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('contact') }}">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="container mt-3">
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ 'danger' if category == 'error' else category }} alert-dismissible fade show">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-5 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Career & Education Advisor</h5>
+                    <p class="text-light-emphasis">Empowering students to make informed career decisions with personalized guidance and comprehensive information about government colleges.</p>
+                </div>
+                <div class="col-md-2 mb-4">
+                    <h6 class="fw-semibold mb-3">Quick Links</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="{{ url_for('index') }}" class="text-light-emphasis text-decoration-none">Home</a></li>
+                        <li><a href="{{ url_for('quiz') }}" class="text-light-emphasis text-decoration-none">Quiz</a></li>
+                        <li><a href="{{ url_for('career_explorer') }}" class="text-light-emphasis text-decoration-none">Careers</a></li>
+                        <li><a href="{{ url_for('college_finder') }}" class="text-light-emphasis text-decoration-none">Colleges</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h6 class="fw-semibold mb-3">Government Support</h6>
+                    <div class="d-flex align-items-center mb-2">
+                        <i data-feather="check-circle" class="text-success me-2" style="width: 16px; height: 16px;"></i>
+                        <small>Supported by Digital India</small>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <i data-feather="check-circle" class="text-success me-2" style="width: 16px; height: 16px;"></i>
+                        <small>Ministry of Education Initiative</small>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h6 class="fw-semibold mb-3">Connect With Us</h6>
+                    <div class="d-flex gap-3">
+                        <a href="#" class="text-light-emphasis"><i data-feather="facebook"></i></a>
+                        <a href="#" class="text-light-emphasis"><i data-feather="twitter"></i></a>
+                        <a href="#" class="text-light-emphasis"><i data-feather="instagram"></i></a>
+                        <a href="#" class="text-light-emphasis"><i data-feather="linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <small class="text-light-emphasis">&copy; 2024 Career & Education Advisor. All rights reserved.</small>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <small class="text-light-emphasis">Made with ❤️ for Indian Students</small>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Initialize Feather Icons -->
+    <script>
+        feather.replace();
+    </script>
+    
+    {% block extra_scripts %}{% endblock %}
+</body>
+</html>
