@@ -1,0 +1,207 @@
+{% extends "base.html" %}
+
+{% block title %}AI Mentor - Career & Education Advisor{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Header -->
+    <div class="row justify-content-center mb-5">
+        <div class="col-lg-8 text-center">
+            <h1 class="display-4 fw-bold mb-4">AI Career Mentor</h1>
+            <p class="lead text-muted">Get instant, personalized guidance on careers, scholarships, and college admissions from our AI-powered mentor.</p>
+        </div>
+    </div>
+
+    <!-- Chat Interface -->
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-lg">
+                <div class="card-header bg-primary text-white p-4">
+                    <div class="d-flex align-items-center">
+                        <i data-feather="message-circle" class="me-3" style="width: 32px; height: 32px;"></i>
+                        <div>
+                            <h5 class="mb-1">AI Career Mentor</h5>
+                            <small class="opacity-75">Online • Ready to help</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card-body p-0">
+                    <!-- Chat Messages -->
+                    <div id="chatMessages" class="chat-container p-4" style="height: 400px; overflow-y: auto;">
+                        <div class="message ai-message mb-3">
+                            <div class="d-flex">
+                                <div class="avatar bg-primary text-white rounded-circle me-3 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                                    <i data-feather="bot" style="width: 20px; height: 20px;"></i>
+                                </div>
+                                <div class="message-content bg-light rounded p-3 flex-grow-1">
+                                    <p class="mb-0">Hello! I'm your AI Career Mentor. I can help you with:</p>
+                                    <ul class="mb-0 mt-2">
+                                        <li>Career exploration and guidance</li>
+                                        <li>College and scholarship recommendations</li>
+                                        <li>Stream selection after 10th/12th</li>
+                                        <li>Exam preparation strategies</li>
+                                        <li>Industry trends and job market insights</li>
+                                    </ul>
+                                    <p class="mb-0 mt-2">What would you like to know?</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Chat Input -->
+                    <div class="border-top p-4">
+                        <form id="chatForm" class="d-flex gap-3">
+                            <input type="text" id="messageInput" class="form-control" placeholder="Ask me about careers, colleges, or scholarships..." required>
+                            <button type="submit" class="btn btn-primary">
+                                <i data-feather="send" style="width: 20px; height: 20px;"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Questions -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <h3 class="fw-bold text-center mb-4">Quick Questions</h3>
+        </div>
+        <div class="col-md-6 col-lg-3 mb-3">
+            <button class="btn btn-outline-primary w-100 p-3" onclick="askQuestion('What careers are best for me after 12th science?')">
+                <i data-feather="microscope" class="mb-2" style="width: 32px; height: 32px;"></i>
+                <div>Science Stream Careers</div>
+            </button>
+        </div>
+        <div class="col-md-6 col-lg-3 mb-3">
+            <button class="btn btn-outline-success w-100 p-3" onclick="askQuestion('What scholarships am I eligible for?')">
+                <i data-feather="award" class="mb-2" style="width: 32px; height: 32px;"></i>
+                <div>Scholarship Eligibility</div>
+            </button>
+        </div>
+        <div class="col-md-6 col-lg-3 mb-3">
+            <button class="btn btn-outline-info w-100 p-3" onclick="askQuestion('Which government colleges should I target?')">
+                <i data-feather="home" class="mb-2" style="width: 32px; height: 32px;"></i>
+                <div>College Selection</div>
+            </button>
+        </div>
+        <div class="col-md-6 col-lg-3 mb-3">
+            <button class="btn btn-outline-warning w-100 p-3" onclick="askQuestion('What exams should I prepare for?')">
+                <i data-feather="book-open" class="mb-2" style="width: 32px; height: 32px;"></i>
+                <div>Exam Preparation</div>
+            </button>
+        </div>
+    </div>
+</div>
+
+<style>
+.chat-container {
+    background: #f8f9fa;
+}
+
+.message {
+    animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.user-message .message-content {
+    background: var(--bs-primary);
+    color: white;
+    margin-left: auto;
+    max-width: 80%;
+}
+
+.ai-message .message-content {
+    max-width: 80%;
+}
+
+.avatar {
+    flex-shrink: 0;
+}
+</style>
+
+<script>
+document.getElementById('chatForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const input = document.getElementById('messageInput');
+    const message = input.value.trim();
+    
+    if (message) {
+        addMessage(message, 'user');
+        input.value = '';
+        
+        // Simulate AI response
+        setTimeout(() => {
+            const response = generateAIResponse(message);
+            addMessage(response, 'ai');
+        }, 1000);
+    }
+});
+
+function addMessage(message, sender) {
+    const chatContainer = document.getElementById('chatMessages');
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `message ${sender}-message mb-3`;
+    
+    if (sender === 'user') {
+        messageDiv.innerHTML = `
+            <div class="d-flex justify-content-end">
+                <div class="message-content bg-primary text-white rounded p-3">
+                    <p class="mb-0">${message}</p>
+                </div>
+                <div class="avatar bg-secondary text-white rounded-circle ms-3 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                    <i data-feather="user" style="width: 20px; height: 20px;"></i>
+                </div>
+            </div>
+        `;
+    } else {
+        messageDiv.innerHTML = `
+            <div class="d-flex">
+                <div class="avatar bg-primary text-white rounded-circle me-3 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                    <i data-feather="bot" style="width: 20px; height: 20px;"></i>
+                </div>
+                <div class="message-content bg-light rounded p-3 flex-grow-1">
+                    <p class="mb-0">${message}</p>
+                </div>
+            </div>
+        `;
+    }
+    
+    chatContainer.appendChild(messageDiv);
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+    
+    // Reinitialize feather icons for new messages
+    feather.replace();
+}
+
+function askQuestion(question) {
+    document.getElementById('messageInput').value = question;
+    document.getElementById('chatForm').dispatchEvent(new Event('submit'));
+}
+
+function generateAIResponse(userMessage) {
+    // Simple response generation based on keywords
+    const responses = {
+        'science': 'For science stream students, popular career options include Engineering (IIT/NIT), Medical (MBBS/BDS), Research, and emerging fields like Data Science and Biotechnology. Your choice should align with your interests in Physics, Chemistry, Biology, or Mathematics.',
+        'scholarship': 'Based on your profile, you may be eligible for various scholarships including Merit-based scholarships, Category-specific funding (SC/ST/OBC), State government scholarships, and Central government schemes like NSP. I can help you check specific eligibility criteria.',
+        'college': 'For government colleges, consider factors like NIRF rankings, placement records, faculty, and location. Popular options include IITs, NITs, IIITs for engineering, AIIMS for medical, and DU, JNU for liberal arts. What field interests you most?',
+        'exam': 'Key exams to consider: JEE Main/Advanced for engineering, NEET for medical, CLAT for law, CA for commerce, and various state-level entrance exams. Preparation strategy depends on your target field and timeline.',
+        'career': 'Career selection should be based on your interests, skills, market demand, and growth potential. Consider taking our aptitude quiz to get personalized recommendations. What subjects do you enjoy most?'
+    };
+    
+    const message = userMessage.toLowerCase();
+    for (const [keyword, response] of Object.entries(responses)) {
+        if (message.includes(keyword)) {
+            return response;
+        }
+    }
+    
+    return "That's a great question! I'd be happy to help you with career guidance. Could you provide more specific details about your interests, current class, or what aspect of career planning you'd like to explore?";
+}
+</script>
+{% endblock %}
