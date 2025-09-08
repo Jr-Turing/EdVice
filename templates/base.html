@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Career & Education Advisor{% endblock %}</title>
+    <title>{% block title %}EdVice{% endblock %}</title>
     
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -16,6 +16,9 @@
     
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='images/logo.svg') }}">
+    <link rel="alternate icon" type="image/png" href="{{ url_for('static', filename='images/logo.svg') }}">
     
     {% block extra_head %}{% endblock %}
 </head>
@@ -23,9 +26,9 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
         <div class="container">
-            <a class="navbar-brand fw-bold text-primary" href="{{ url_for('index') }}">
-                <i data-feather="book-open" class="me-2"></i>
-                Career & Education Advisor
+            <a class="navbar-brand fw-bold text-primary d-flex align-items-center" href="{{ url_for('index') }}">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="EdVice" class="navbar-logo me-2">
+                
             </a>
             
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -151,7 +154,7 @@
             <hr class="my-4">
             <div class="row align-items-center">
                 <div class="col-md-6">
-                    <small class="text-light-emphasis">&copy; 2024 Career & Education Advisor. All rights reserved.</small>
+                    <small class="text-light-emphasis">&copy; 2025 EdVice. All rights reserved.</small>
                 </div>
                 <div class="col-md-6 text-md-end">
                     <small class="text-light-emphasis">Made with ❤️ for Indian Students</small>

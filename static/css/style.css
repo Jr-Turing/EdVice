@@ -163,6 +163,13 @@ h1, h2, h3, h4, h5, h6 {
     color: var(--primary-blue) !important;
 }
 
+/* Brand logo image size */
+.navbar-logo {
+    height: 32px;
+    width: auto;
+    display: inline-block;
+}
+
 .navbar-nav .nav-link {
     font-weight: 500;
     color: #374151 !important;
@@ -246,6 +253,12 @@ h1, h2, h3, h4, h5, h6 {
     
     .feature-icon {
         margin: 0 auto 1rem auto;
+    }
+}
+
+@media (max-width: 576px) {
+    .navbar-logo {
+        height: 28px;
     }
 }
 
