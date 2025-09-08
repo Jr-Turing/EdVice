@@ -1,18 +1,12 @@
 import os
 import logging
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.orm import DeclarativeBase
 from werkzeug.middleware.proxy_fix import ProxyFix
 from flask_login import LoginManager
+from extensions import db
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
-
-class Base(DeclarativeBase):
-    pass
-
-db = SQLAlchemy(model_class=Base)
 
 # Create the app
 app = Flask(__name__)
@@ -36,20 +30,22 @@ login_manager.login_view = 'auth.login'
 login_manager.login_message = 'Please log in to access this page.'
 
 with app.app_context():
-    # Import models and routes
-    import models
-    import routes
-    
+    # Import models and routes only after db/app are ready
+    import models  # noqa: F401
+    import routes  # noqa: F401
+
     # Setup user loader for Flask-Login
     @login_manager.user_loader
     def load_user(user_id):
-        return models.User.query.get(user_id)
-    
+        from models import User
+        return User.query.get(user_id)
+
     # Create all tables
     db.create_all()
-    
+
     # Initialize sample data
-    models.initialize_data()
+    from models import initialize_data
+    initialize_data()
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)

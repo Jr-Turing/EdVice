@@ -7,6 +7,10 @@ from auth_routes import auth_bp
 from advanced_routes import advanced_bp
 import json
 import uuid
+import os
+from dotenv import load_dotenv
+
+# Optional: lazy import inside handler to avoid cold-start overhead if needed
 
 # Register blueprints
 app.register_blueprint(auth_bp)
@@ -51,10 +55,10 @@ def quiz():
     # Generate a session ID if not exists
     if 'quiz_session_id' not in session:
         session['quiz_session_id'] = str(uuid.uuid4())
-    
+
     # Reset quiz answers for new attempt
     session['quiz_answers'] = {}
-    
+
     return render_template('quiz.html', questions=QUIZ_QUESTIONS, total_questions=len(QUIZ_QUESTIONS))
 
 @app.route('/quiz/question/<int:question_id>')
@@ -104,6 +108,7 @@ def quiz_results():
     db.session.add(quiz_result)
     db.session.commit()
     
+    # end quiz_results
     # Get detailed career information
     career_details = []
     for rec in recommendations:
@@ -206,3 +211,50 @@ def about():
 @app.route('/contact')
 def contact():
     return render_template('contact.html')
+
+"""
+Chatbot API (Gemini)
+"""
+@app.route('/api/chat', methods=['POST'])
+def chat_api():
+    data = request.get_json(silent=True) or {}
+    user_message = (data.get('message') or '').strip()
+    if not user_message:
+        return jsonify({"error": "message is required"}), 400
+    
+    api_key = os.environ.get('GEMINI_API_KEY')
+    if not api_key:
+        return jsonify({"error": "Server not configured: GEMINI_API_KEY missing"}), 500
+
+    # Minimal payload (matches your working curl)
+    payload = {
+        "contents": [
+            {
+                "parts": [
+                    {"text": user_message}
+                ]
+            }
+        ]
+    }
+
+    import requests
+    model = os.environ.get('GEMINI_MODEL', 'gemini-2.0-flash')
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
+    try:
+        headers = {
+            'Content-Type': 'application/json',
+            'X-goog-api-key': api_key,
+        }
+        r = requests.post(url, json=payload, headers=headers, timeout=25)
+        if r.status_code >= 400:
+            return jsonify({"error": f"Upstream {r.status_code}", "details": r.text[:500]}), 502
+        resp = r.json()
+        parts = (resp.get('candidates') or [{}])[0].get('content', {}).get('parts', [])
+        reply = "".join(p.get('text', '') for p in parts).strip()
+        if not reply:
+            return jsonify({"error": "Empty response from model", "raw": resp}), 502
+        return jsonify({"reply": reply})
+    except requests.Timeout:
+        return jsonify({"error": "Upstream timeout"}), 504
+    except Exception as e:
+        return jsonify({"error": "Server error", "details": str(e)}), 500

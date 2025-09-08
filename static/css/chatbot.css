@@ -1,0 +1,79 @@
+:root{
+  --edvise-primary:#2563eb;
+  --edvise-primary-dark:#1e40af;
+  --edvise-bg:#ffffff;
+  --edvise-text:#0f172a;
+  --edvise-muted:#64748b;
+  --edvise-border:#e2e8f0;
+  --edvise-bot:#eef2ff; /* indigo-50 */
+  --edvise-user:#dcfce7; /* green-100 */
+}
+
+/* Toggle button */
+.edvise-chat-button{
+  position:fixed; right:16px; bottom:16px; z-index:1050;
+  width:56px; height:56px; border-radius:50%;
+  border:none; box-shadow:0 10px 20px rgba(2,6,23,.15);
+  background:linear-gradient(135deg,var(--edvise-primary),var(--edvise-primary-dark));
+  display:flex; align-items:center; justify-content:center; cursor:pointer;
+}
+.edvise-chat-button img{ width:28px; height:28px; object-fit:contain; filter:brightness(200%);
+}
+.edvise-chat-button:hover{ transform:translateY(-1px); box-shadow:0 14px 24px rgba(2,6,23,.22); }
+
+/* Panel */
+.edvise-chat-panel{
+  position:fixed; right:16px; bottom:84px; z-index:1050; display:none;
+  width:360px; max-width:94vw; border-radius:16px; overflow:hidden;
+  background:var(--edvise-bg); border:1px solid var(--edvise-border);
+  box-shadow:0 20px 40px rgba(2,6,23,.18);
+}
+.edvise-chat-panel.open{ display:block; animation:edvise-pop .2s ease-out; }
+@keyframes edvise-pop{ from{ transform:translateY(8px); opacity:0 } to{ transform:none; opacity:1 } }
+
+/* Header */
+.edvise-chat-header{
+  background:linear-gradient(135deg,var(--edvise-primary),var(--edvise-primary-dark));
+  color:white; padding:10px 12px; display:flex; align-items:center; gap:10px;
+}
+.edvise-chat-header img{ width:28px; height:28px; border-radius:6px; background:#fff; object-fit:contain; }
+.edvise-chat-header .title{ font-weight:600; letter-spacing:.2px; }
+.edvise-chat-header .spacer{ flex:1; }
+.edvise-chat-header .icon-btn{ background:transparent; border:none; color:#e2e8f0; cursor:pointer; padding:6px; }
+.edvise-chat-header .icon-btn:hover{ color:#fff; }
+
+/* Body */
+.edvise-chat-body{ padding:12px; height:300px; overflow:auto; background:#fafafa; }
+.edvise-chat-body::-webkit-scrollbar{ width:8px }
+.edvise-chat-body::-webkit-scrollbar-thumb{ background:#cbd5e1; border-radius:8px }
+
+/* Messages */
+.edvise-msg{ display:flex; gap:8px; margin:8px 0; align-items:flex-end; }
+.edvise-avatar{ width:28px; height:28px; border-radius:50%; background:#e2e8f0; display:flex; align-items:center; justify-content:center; overflow:hidden; }
+.edvise-avatar img{ width:100%; height:100%; object-fit:cover }
+.edvise-bubble{ max-width:75%; padding:8px 12px; border-radius:14px; font-size:.95rem; line-height:1.4; }
+.edvise-bot .edvise-bubble{ background:var(--edvise-bot); color:var(--edvise-text); border:1px solid #c7d2fe; }
+.edvise-user{ justify-content:flex-end }
+.edvise-user .edvise-bubble{ background:var(--edvise-user); border:1px solid #bbf7d0; }
+.edvise-user .edvise-avatar{ order:2 }
+
+/* Suggestions */
+.edvise-suggestions{ display:flex; flex-wrap:wrap; gap:8px; margin:6px 0 2px }
+.edvise-chip{ border:1px solid var(--edvise-border); background:#fff; color:var(--edvise-muted);
+  border-radius:999px; padding:6px 10px; font-size:.85rem; cursor:pointer }
+.edvise-chip:hover{ color:var(--edvise-text); border-color:#cbd5e1 }
+
+/* Footer */
+.edvise-chat-footer{ padding:10px; background:#fff; border-top:1px solid var(--edvise-border); }
+.edvise-input{ display:flex; gap:8px }
+.edvise-input input{ flex:1; border:1px solid var(--edvise-border); border-radius:10px; padding:10px 12px; outline:none }
+.edvise-input input:focus{ border-color:var(--edvise-primary); box-shadow:0 0 0 3px rgba(37,99,235,.12) }
+.edvise-input button{ background:var(--edvise-primary); color:white; border:none; border-radius:10px; padding:10px 14px; cursor:pointer }
+.edvise-input button:disabled{ opacity:.6; cursor:not-allowed }
+
+/* Typing dots */
+.edvise-typing{ display:inline-block; }
+.edvise-typing span{ display:inline-block; width:6px; height:6px; margin:0 1px; background:#6366f1; border-radius:50%; animation:blink 1.2s infinite }
+.edvise-typing span:nth-child(2){ animation-delay:.2s }
+.edvise-typing span:nth-child(3){ animation-delay:.4s }
+@keyframes blink{ 0%,80%,100%{ opacity:.2 } 40%{ opacity:1 } }

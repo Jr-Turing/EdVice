@@ -16,6 +16,7 @@
     
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/chatbot.css') }}">
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='images/logo.svg') }}">
     <link rel="alternate icon" type="image/png" href="{{ url_for('static', filename='images/logo.svg') }}">
@@ -118,14 +119,14 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-4 mb-4">
-                    <h5 class="fw-bold mb-3">Career & Education Advisor</h5>
+                    <h5 class="fw-bold mb-3">EdVise</h5>
                     <p class="text-light-emphasis">Empowering students to make informed career decisions with personalized guidance and comprehensive information about government colleges.</p>
                 </div>
                 <div class="col-md-2 mb-4">
                     <h6 class="fw-semibold mb-3">Quick Links</h6>
                     <ul class="list-unstyled">
                         <li><a href="{{ url_for('index') }}" class="text-light-emphasis text-decoration-none">Home</a></li>
-                        <li><a href="{{ url_for('quiz') }}" class="text-light-emphasis text-decoration-none">Quiz</a></li>
+                        <li><a href="{{ url_for('quiz') }}" class="text-light-emphasis text-decoration-none">Quizzes</a></li>
                         <li><a href="{{ url_for('career_explorer') }}" class="text-light-emphasis text-decoration-none">Careers</a></li>
                         <li><a href="{{ url_for('college_finder') }}" class="text-light-emphasis text-decoration-none">Colleges</a></li>
                     </ul>
@@ -154,7 +155,7 @@
             <hr class="my-4">
             <div class="row align-items-center">
                 <div class="col-md-6">
-                    <small class="text-light-emphasis">&copy; 2025 EdVice. All rights reserved.</small>
+                    <small class="text-light-emphasis">&copy; 2025 EdVise. All rights reserved.</small>
                 </div>
                 <div class="col-md-6 text-md-end">
                     <small class="text-light-emphasis">Made with ❤️ for Indian Students</small>
@@ -171,6 +172,8 @@
         feather.replace();
     </script>
     
+    <!-- Chatbot widget -->
+    <script src="{{ url_for('static', filename='js/chatbot.js') }}"></script>
     {% block extra_scripts %}{% endblock %}
 </body>
 </html>
