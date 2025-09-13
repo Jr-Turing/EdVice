@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Notifications - EdVise{% endblock %}
+{% block content %}
+<section class="py-5">
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h1 class="mb-0">Notifications</h1>
+      <a href="?mark_read=1" class="btn btn-sm btn-outline-secondary">Mark all as read</a>
+    </div>
+    {% if notifications %}
+      <div class="list-group">
+        {% for n in notifications %}
+          <div class="list-group-item d-flex justify-content-between align-items-start">
+            <div>
+              <div class="fw-semibold">{{ n.title or 'Notification' }}</div>
+              <div class="small text-muted">{{ n.message or '' }}</div>
+            </div>
+            <small class="text-muted">{{ n.created_at.strftime('%b %d, %Y') if n.created_at }}</small>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="alert alert-info">You're all caught up. No notifications.</div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

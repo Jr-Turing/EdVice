@@ -82,7 +82,7 @@
                     <div class="row align-items-center">
                         <div class="col-md-8">
                             <div class="d-flex align-items-center mb-3">
-                                <i data-feather="award" class="me-3" style="width: 32px; height: 32px;"></i>
+                                <i data-feather="award" class="me-3 icon-32"></i>
                                 <h4 class="mb-0">Your Top Career Match</h4>
                             </div>
                             <h2 class="display-6 fw-bold mb-3">{{ recommendations[0].name }}</h2>
@@ -112,17 +112,17 @@
                     <div class="text-center mb-4">
                         <div class="career-icon">
                             {% if career.category == 'Technology' %}
-                            <i data-feather="cpu" class="text-white" style="width: 32px; height: 32px;"></i>
+                            <i data-feather="cpu" class="text-white icon-32"></i>
                             {% elif career.category == 'Healthcare' %}
-                            <i data-feather="heart" class="text-white" style="width: 32px; height: 32px;"></i>
+                            <i data-feather="heart" class="text-white icon-32"></i>
                             {% elif career.category == 'Government' %}
-                            <i data-feather="flag" class="text-white" style="width: 32px; height: 32px;"></i>
+                            <i data-feather="flag" class="text-white icon-32"></i>
                             {% elif career.category == 'Education' %}
-                            <i data-feather="book-open" class="text-white" style="width: 32px; height: 32px;"></i>
+                            <i data-feather="book-open" class="text-white icon-32"></i>
                             {% elif career.category == 'Business' %}
-                            <i data-feather="briefcase" class="text-white" style="width: 32px; height: 32px;"></i>
+                            <i data-feather="briefcase" class="text-white icon-32"></i>
                             {% else %}
-                            <i data-feather="star" class="text-white" style="width: 32px; height: 32px;"></i>
+                            <i data-feather="star" class="text-white icon-32"></i>
                             {% endif %}
                         </div>
                         <h5 class="fw-bold mb-2">{{ career.name }}</h5>
@@ -134,7 +134,7 @@
                     
                     <div class="mb-3">
                         <h6 class="fw-semibold mb-2">
-                            <i data-feather="briefcase" class="me-2" style="width: 16px; height: 16px;"></i>
+                            <i data-feather="briefcase" class="me-2 icon-16"></i>
                             Career Opportunities
                         </h6>
                         <div class="d-flex flex-wrap gap-1">
@@ -147,7 +147,7 @@
                     {% if career.salary_range %}
                     <div class="mb-3">
                         <h6 class="fw-semibold mb-2">
-                            <i data-feather="dollar-sign" class="me-2" style="width: 16px; height: 16px;"></i>
+                            <i data-feather="dollar-sign" class="me-2 icon-16"></i>
                             Salary Range
                         </h6>
                         <span class="text-success fw-semibold">{{ career.salary_range }}</span>
@@ -168,15 +168,15 @@
                     <p class="text-muted mb-4">Discover detailed career roadmaps and find the right colleges for your chosen path.</p>
                     <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center">
                         <a href="{{ url_for('career_explorer') }}" class="btn btn-primary btn-lg px-4">
-                            <i data-feather="map" class="me-2"></i>
+                            <i data-feather="map" class="me-2 icon-20"></i>
                             Explore Career Paths
                         </a>
                         <a href="{{ url_for('college_finder') }}" class="btn btn-success btn-lg px-4">
-                            <i data-feather="search" class="me-2"></i>
+                            <i data-feather="search" class="me-2 icon-20"></i>
                             Find Colleges
                         </a>
                         <a href="{{ url_for('quiz') }}" class="btn btn-outline-secondary btn-lg px-4">
-                            <i data-feather="refresh-cw" class="me-2"></i>
+                            <i data-feather="refresh-cw" class="me-2 icon-20"></i>
                             Retake Quiz
                         </a>
                     </div>
@@ -191,11 +191,11 @@
         <div class="col-lg-6 text-center">
             <div class="card border-0 shadow-sm">
                 <div class="card-body p-5">
-                    <i data-feather="alert-circle" class="text-warning mb-4" style="width: 64px; height: 64px;"></i>
+                    <i data-feather="alert-circle" class="text-warning mb-4 icon-48"></i>
                     <h4 class="fw-bold mb-3">No Quiz Results Found</h4>
                     <p class="text-muted mb-4">It looks like you haven't completed the aptitude quiz yet. Take our comprehensive assessment to get personalized career recommendations.</p>
                     <a href="{{ url_for('quiz') }}" class="btn btn-primary btn-lg">
-                        <i data-feather="play" class="me-2"></i>
+                        <i data-feather="play" class="me-2 icon-20"></i>
                         Take Aptitude Quiz
                     </a>
                 </div>

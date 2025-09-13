@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Eligibility Results - EdVise{% endblock %}
+{% block content %}
+<section class="py-5">
+  <div class="container">
+    <h1 class="mb-1">Eligible Colleges</h1>
+    <p class="text-muted">Based on your 12th marks: <strong>{{ marks_12th }}%</strong> | Category: <strong>{{ category }}</strong> | Stream: <strong>{{ stream or '—' }}</strong></p>
+
+    {% if colleges %}
+      <div class="row g-3">
+        {% for college in colleges %}
+          <div class="col-md-6">
+            <div class="card h-100 shadow-sm">
+              <div class="card-body">
+                <h5 class="card-title mb-1">{{ college.name }}</h5>
+                <div class="text-muted small mb-2">{{ college.city }}, {{ college.state }} • {{ college.type }}</div>
+                {% if college.courses %}
+                  <div class="small">Courses: {{ college.courses|join(', ') }}</div>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="alert alert-warning mt-4">No colleges matched your inputs. Try adjusting criteria.</div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

@@ -1,50 +1,90 @@
 {% extends "base.html" %}
 
-{% block title %}Home - Career & Education Advisor{% endblock %}
+{% block title %}Home - EdVice Career & Education Advisor{% endblock %}
+
+{% block description %}Discover your ideal career path with our comprehensive aptitude assessment. Find the best government colleges in India and get personalized guidance for your educational journey.{% endblock %}
 
 {% block content %}
 <!-- Hero Section -->
-<section class="hero-section bg-primary text-white py-5">
+<section class="hero-section">
     <div class="container">
-        <div class="row align-items-center min-vh-75">
-            <div class="col-lg-6 mb-4 mb-lg-0">
-                <h1 class="display-4 fw-bold mb-4">One-Stop Personalized Career & Education Guidance</h1>
-                <p class="lead mb-4">Confused about streams, careers, and government college options after Class 10 or 12? Get personalized recommendations based on your interests, aptitude, and goals.</p>
-                <div class="d-flex flex-column flex-sm-row gap-3">
-                    <a href="{{ url_for('quiz') }}" class="btn btn-light btn-lg px-4 py-3">
-                        <i data-feather="play-circle" class="me-2"></i>
-                        Start Aptitude Quiz
-                    </a>
-                    <a href="{{ url_for('college_finder') }}" class="btn btn-outline-light btn-lg px-4 py-3">
-                        <i data-feather="search" class="me-2"></i>
-                        Find Colleges
-                    </a>
+        <div class="row align-items-center min-vh-100">
+            <div class="col-lg-6">
+                <div class="hero-content">
+                    <div class="hero-badge mb-4">
+                        <span class="badge-text">🎓 Trusted by 50,000+ Students</span>
+                    </div>
+                    <h1 class="hero-title">Discover Your Perfect Career Path with AI-Powered Guidance</h1>
+                    <p class="hero-subtitle">Confused about streams, careers, and government college options after Class 10 or 12? Get personalized recommendations based on your interests, aptitude, and goals with our advanced AI system.</p>
+                    <div class="hero-actions">
+                        <a href="{{ url_for('quiz') }}" class="btn btn-light btn-lg hero-btn-primary">
+                            <i data-feather="play-circle" class="icon me-2"></i>
+                            Start Free Quiz
+                            <span class="btn-badge">No Signup Required</span>
+                        </a>
+                        <a href="{{ url_for('college_finder') }}" class="btn btn-outline-light btn-lg hero-btn-secondary">
+                            <i data-feather="search" class="icon me-2"></i>
+                            Explore Colleges
+                        </a>
+                    </div>
+                    <div class="hero-features mt-4">
+                        <div class="feature-item">
+                            <i data-feather="check-circle" class="feature-check"></i>
+                            <span>100% Free</span>
+                        </div>
+                        <div class="feature-item">
+                            <i data-feather="check-circle" class="feature-check"></i>
+                            <span>Instant Results</span>
+                        </div>
+                        <div class="feature-item">
+                            <i data-feather="check-circle" class="feature-check"></i>
+                            <span>AI-Powered</span>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="col-lg-6">
-                <div class="hero-illustration text-center">
-                    <div class="hero-cards">
-                        <div class="card hero-card shadow-lg">
-                            <div class="card-body text-center text-dark">
-                                <i data-feather="users" class="text-primary mb-3" style="width: 48px; height: 48px;"></i>
-                                <h5>50,000+</h5>
-                                <p class="small mb-0">Students Guided</p>
+                <div class="hero-visual">
+                    <div class="hero-stats">
+                        <div class="stat-card animate-float">
+                            <div class="stat-icon">
+                                <i data-feather="users"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-number">50,000+</div>
+                                <div class="stat-label">Students Guided</div>
                             </div>
                         </div>
-                        <div class="card hero-card shadow-lg">
-                            <div class="card-body text-center text-dark">
-                                <i data-feather="book" class="text-success mb-3" style="width: 48px; height: 48px;"></i>
-                                <h5>2,000+</h5>
-                                <p class="small mb-0">Government Colleges</p>
+                        <div class="stat-card animate-float" style="animation-delay: 0.5s;">
+                            <div class="stat-icon">
+                                <i data-feather="home"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-number">2000+</div>
+                                <div class="stat-label">Government Colleges</div>
                             </div>
                         </div>
-                        <div class="card hero-card shadow-lg">
-                            <div class="card-body text-center text-dark">
-                                <i data-feather="briefcase" class="text-warning mb-3" style="width: 48px; height: 48px;"></i>
-                                <h5>100+</h5>
-                                <p class="small mb-0">Career Paths</p>
+                        <div class="stat-card animate-float" style="animation-delay: 1s;">
+                            <div class="stat-icon">
+                                <i data-feather="compass"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-number">100+</div>
+                                <div class="stat-label">Career Paths</div>
                             </div>
                         </div>
+                        <div class="stat-card animate-float" style="animation-delay: 1.5s;">
+                            <div class="stat-icon">
+                                <i data-feather="award"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-number">98%</div>
+                                <div class="stat-label">Success Rate</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hero-illustration">
+                        <img src="{{ url_for('static', filename='images/student.svg') }}" alt="Career Guidance" class="hero-image">
                     </div>
                 </div>
             </div>
@@ -52,122 +92,102 @@
     </div>
 </section>
 
-<!-- Problem Statement -->
-<section class="py-5 bg-light">
+<!-- Problem Statement Section -->
+<section class="section bg-light">
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-8 text-center">
-                <h2 class="fw-bold mb-4">The Problem We Solve</h2>
-                <p class="lead text-muted mb-5">Every year, millions of students struggle with career decisions due to lack of proper guidance and information about opportunities in government colleges.</p>
-            </div>
+        <div class="section-header">
+            <h2 class="section-title">The Problem We Solve</h2>
+            <p class="section-subtitle">Every year, millions of students struggle with career decisions due to lack of proper guidance and information about opportunities in government colleges.</p>
         </div>
-        <div class="row g-4">
-            <div class="col-md-4">
-                <div class="card h-100 border-0 shadow-sm">
-                    <div class="card-body text-center p-4">
-                        <i data-feather="help-circle" class="text-danger mb-3" style="width: 48px; height: 48px;"></i>
-                        <h5 class="fw-semibold">Confusion About Streams</h5>
-                        <p class="text-muted">Students unsure which stream aligns with their interests and future goals.</p>
-                    </div>
+        <div class="features-grid">
+            <div class="feature-card animate-fade-in-up">
+                <div class="feature-icon">
+                    <i data-feather="help-circle"></i>
                 </div>
+                <h3 class="feature-title">Confusion About Streams</h3>
+                <p class="feature-description">Students unsure which stream aligns with their interests and future goals.</p>
             </div>
-            <div class="col-md-4">
-                <div class="card h-100 border-0 shadow-sm">
-                    <div class="card-body text-center p-4">
-                        <i data-feather="map" class="text-warning mb-3" style="width: 48px; height: 48px;"></i>
-                        <h5 class="fw-semibold">Lack of Career Roadmaps</h5>
-                        <p class="text-muted">No clear understanding of career progression and opportunities.</p>
-                    </div>
+            <div class="feature-card animate-fade-in-up" style="animation-delay: 0.2s;">
+                <div class="feature-icon">
+                    <i data-feather="map"></i>
                 </div>
+                <h3 class="feature-title">Lack of Career Roadmaps</h3>
+                <p class="feature-description">No clear understanding of career progression and opportunities.</p>
             </div>
-            <div class="col-md-4">
-                <div class="card h-100 border-0 shadow-sm">
-                    <div class="card-body text-center p-4">
-                        <i data-feather="search" class="text-info mb-3" style="width: 48px; height: 48px;"></i>
-                        <h5 class="fw-semibold">Limited College Information</h5>
-                        <p class="text-muted">Difficulty finding comprehensive information about government colleges.</p>
-                    </div>
+            <div class="feature-card animate-fade-in-up" style="animation-delay: 0.4s;">
+                <div class="feature-icon">
+                    <i data-feather="search"></i>
                 </div>
+                <h3 class="feature-title">Limited College Information</h3>
+                <p class="feature-description">Difficulty finding comprehensive information about government colleges.</p>
             </div>
         </div>
     </div>
 </section>
 
 <!-- Features Section -->
-<section class="py-5">
+<section class="section">
     <div class="container">
-        <div class="row justify-content-center mb-5">
-            <div class="col-lg-8 text-center">
-                <h2 class="fw-bold mb-4">How We Help You Succeed</h2>
-                <p class="lead text-muted">Our comprehensive platform provides personalized guidance at every step of your career journey.</p>
-            </div>
+        <div class="section-header">
+            <h2 class="section-title">How We Help You Succeed</h2>
+            <p class="section-subtitle">Our comprehensive platform provides personalized guidance at every step of your career journey.</p>
         </div>
-        <div class="row g-4">
-            <div class="col-lg-6">
-                <div class="feature-card d-flex align-items-start">
-                    <div class="feature-icon bg-primary text-white rounded-3 p-3 me-4">
-                        <i data-feather="clipboard" style="width: 32px; height: 32px;"></i>
-                    </div>
-                    <div>
-                        <h5 class="fw-semibold mb-3">Scientific Aptitude Assessment</h5>
-                        <p class="text-muted mb-3">Take our comprehensive 20-question psychometric test to discover your strengths, interests, and ideal career paths.</p>
-                        <a href="{{ url_for('quiz') }}" class="btn btn-outline-primary btn-sm">Start Quiz</a>
-                    </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i data-feather="clipboard"></i>
                 </div>
+                <h3 class="feature-title">Scientific Aptitude Assessment</h3>
+                <p class="feature-description">Take our comprehensive 20-question psychometric test to discover your strengths, interests, and ideal career paths.</p>
+                <a href="{{ url_for('quiz') }}" class="btn btn-outline-primary btn-sm mt-3">Start Quiz</a>
             </div>
-            <div class="col-lg-6">
-                <div class="feature-card d-flex align-items-start">
-                    <div class="feature-icon bg-success text-white rounded-3 p-3 me-4">
-                        <i data-feather="target" style="width: 32px; height: 32px;"></i>
-                    </div>
-                    <div>
-                        <h5 class="fw-semibold mb-3">Personalized Recommendations</h5>
-                        <p class="text-muted mb-3">Get top 3-5 career clusters tailored to your profile with detailed information about each path.</p>
-                        <a href="{{ url_for('career_explorer') }}" class="btn btn-outline-success btn-sm">Explore Careers</a>
-                    </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i data-feather="target"></i>
                 </div>
+                <h3 class="feature-title">Personalized Recommendations</h3>
+                <p class="feature-description">Get top 3-5 career clusters tailored to your profile with detailed information about each path.</p>
+                <a href="{{ url_for('career_explorer') }}" class="btn btn-outline-primary btn-sm mt-3">Explore Careers</a>
             </div>
-            <div class="col-lg-6">
-                <div class="feature-card d-flex align-items-start">
-                    <div class="feature-icon bg-info text-white rounded-3 p-3 me-4">
-                        <i data-feather="map-pin" style="width: 32px; height: 32px;"></i>
-                    </div>
-                    <div>
-                        <h5 class="fw-semibold mb-3">Visual Career Roadmaps</h5>
-                        <p class="text-muted mb-3">See clear pathways from education to career goals with salary expectations and growth opportunities.</p>
-                        <a href="{{ url_for('career_explorer') }}" class="btn btn-outline-info btn-sm">View Roadmaps</a>
-                    </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i data-feather="map-pin"></i>
                 </div>
+                <h3 class="feature-title">Visual Career Roadmaps</h3>
+                <p class="feature-description">See clear pathways from education to career goals with salary expectations and growth opportunities.</p>
+                <a href="{{ url_for('career_explorer') }}" class="btn btn-outline-primary btn-sm mt-3">View Roadmaps</a>
             </div>
-            <div class="col-lg-6">
-                <div class="feature-card d-flex align-items-start">
-                    <div class="feature-icon bg-warning text-white rounded-3 p-3 me-4">
-                        <i data-feather="home" style="width: 32px; height: 32px;"></i>
-                    </div>
-                    <div>
-                        <h5 class="fw-semibold mb-3">Comprehensive College Database</h5>
-                        <p class="text-muted mb-3">Search and filter through 2000+ government colleges with cut-offs, fees, facilities, and scholarship information.</p>
-                        <a href="{{ url_for('college_finder') }}" class="btn btn-outline-warning btn-sm">Find Colleges</a>
-                    </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i data-feather="home"></i>
                 </div>
+                <h3 class="feature-title">Comprehensive College Database</h3>
+                <p class="feature-description">Search and filter through 2000+ government colleges with cut-offs, fees, facilities, and scholarship information.</p>
+                <a href="{{ url_for('college_finder') }}" class="btn btn-outline-primary btn-sm mt-3">Find Colleges</a>
             </div>
         </div>
     </div>
 </section>
 
 <!-- CTA Section -->
-<section class="py-5 bg-gradient-primary text-white">
+<section class="section bg-primary text-white">
     <div class="container">
         <div class="row justify-content-center text-center">
             <div class="col-lg-8">
-                <h2 class="fw-bold mb-4">Ready to Discover Your Ideal Career Path?</h2>
+                <h2 class="display-4 fw-bold mb-4">Ready to Discover Your Ideal Career Path?</h2>
                 <p class="lead mb-4">Join thousands of students who have found their direction with our personalized career guidance.</p>
-                <a href="{{ url_for('quiz') }}" class="btn btn-light btn-lg px-5 py-3">
-                    <i data-feather="arrow-right" class="me-2"></i>
+                <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center">
+                    <a href="{{ url_for('quiz') }}" class="btn btn-light btn-lg">
+                        <i data-feather="arrow-right" class="icon me-2"></i>
                     Get Started Now
                 </a>
+                    <a href="{{ url_for('about') }}" class="btn btn-outline-light btn-lg">
+                        <i data-feather="info" class="icon me-2"></i>
+                        Learn More
+                    </a>
+                </div>
                 <div class="mt-4">
-                    <small class="text-light-emphasis">✓ Free to use ✓ No registration required ✓ Instant results</small>
+                    <small class="text-white-50">✓ Free to use ✓ No registration required ✓ Instant results</small>
                 </div>
             </div>
         </div>
@@ -175,34 +195,75 @@
 </section>
 
 <!-- Stats Section -->
-<section class="py-5">
+<section class="section bg-light">
     <div class="container">
         <div class="row g-4 text-center">
             <div class="col-md-3">
-                <div class="stat-item">
-                    <h3 class="fw-bold text-primary display-6">98%</h3>
-                    <p class="text-muted">Student Satisfaction</p>
+                <div class="stat-card">
+                    <div class="stat-number text-primary">98%</div>
+                    <div class="stat-label">Student Satisfaction</div>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="stat-item">
-                    <h3 class="fw-bold text-success display-6">2000+</h3>
-                    <p class="text-muted">Government Colleges</p>
+                <div class="stat-card">
+                    <div class="stat-number text-success">2000+</div>
+                    <div class="stat-label">Government Colleges</div>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="stat-item">
-                    <h3 class="fw-bold text-info display-6">100+</h3>
-                    <p class="text-muted">Career Paths</p>
+                <div class="stat-card">
+                    <div class="stat-number text-info">100+</div>
+                    <div class="stat-label">Career Paths</div>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="stat-item">
-                    <h3 class="fw-bold text-warning display-6">50K+</h3>
-                    <p class="text-muted">Students Guided</p>
+                <div class="stat-card">
+                    <div class="stat-number text-warning">50K+</div>
+                    <div class="stat-label">Students Guided</div>
                 </div>
             </div>
         </div>
     </div>
 </section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+// Add smooth animations on scroll
+document.addEventListener('DOMContentLoaded', function() {
+    // Animate elements on scroll
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+
+    // Observe all feature cards
+    document.querySelectorAll('.feature-card').forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(30px)';
+        card.style.transition = 'all 0.6s ease';
+        observer.observe(card);
+    });
+
+    // Add hover effects to buttons
+    document.querySelectorAll('.btn').forEach(btn => {
+        btn.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-2px)';
+        });
+        
+        btn.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0)';
+        });
+    });
+});
+    </script>
 {% endblock %}

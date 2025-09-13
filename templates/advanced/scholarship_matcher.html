@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Scholarship Matches - EdVise{% endblock %}
+{% block content %}
+<section class="py-5">
+  <div class="container">
+    <h1 class="mb-4">Scholarship Matches</h1>
+    {% if scholarships %}
+      <div class="row g-3">
+        {% for s in scholarships %}
+          <div class="col-md-6">
+            <div class="card h-100 shadow-sm">
+              <div class="card-body">
+                <h5 class="card-title mb-1">{{ s.name }}</h5>
+                <div class="text-muted small mb-2">Provider: {{ s.provider or '—' }}</div>
+                {% if s.amount %}<div class="small">Amount: {{ s.amount }}</div>{% endif %}
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="alert alert-warning">No matches found. Complete your profile to improve recommendations.</div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

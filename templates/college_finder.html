@@ -84,7 +84,7 @@
                                            name="search" 
                                            placeholder="Enter college name..." 
                                            value="{{ current_search }}">
-                                    <i data-feather="search" class="position-absolute top-50 end-0 translate-middle-y me-3" style="width: 20px; height: 20px;"></i>
+                                    <i data-feather="search" class="position-absolute top-50 end-0 translate-middle-y me-3 icon-20"></i>
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -107,7 +107,7 @@
                             </div>
                             <div class="col-md-2">
                                 <button type="submit" class="btn btn-primary w-100">
-                                    <i data-feather="filter" class="me-2" style="width: 16px; height: 16px;"></i>
+                                    <i data-feather="filter" class="me-2 icon-16"></i>
                                     Filter
                                 </button>
                             </div>
@@ -122,10 +122,10 @@
     <div class="row mb-4">
         <div class="col-12">
             <div class="d-flex justify-content-between align-items-center">
-                <h5 class="mb-0">Found {{ colleges|length }} colleges</h5>
+                <h5 class="mb-0">Found {{ total if total is defined else colleges|length }} colleges</h5>
                 <div class="d-flex gap-2">
                     <button class="btn btn-outline-secondary btn-sm" onclick="clearFilters()">
-                        <i data-feather="x" class="me-1" style="width: 14px; height: 14px;"></i>
+                        <i data-feather="x" class="me-1 icon-14"></i>
                         Clear Filters
                     </button>
                 </div>
@@ -138,7 +138,7 @@
     <div class="row g-4">
         {% for college in colleges %}
         <div class="col-lg-6">
-            <div class="card college-card shadow-sm">
+            <div class="card college-card shadow-sm" data-state="{{ college.state|lower }}" data-type="{{ college.type|lower }}" data-seats="{{ college.seats or 0 }}" data-fees="{{ college.fees_range or '' }}">
                 <!-- College Header -->
                 <div class="college-header p-4">
                     <div class="d-flex justify-content-between align-items-start mb-3">
@@ -158,14 +158,14 @@
                     <div class="row g-3 mb-4">
                         <div class="col-6">
                             <div class="text-center">
-                                <i data-feather="users" class="text-primary mb-2" style="width: 24px; height: 24px;"></i>
+                                <i data-feather="users" class="text-primary mb-2 icon-24"></i>
                                 <div class="fw-bold">{{ college.seats }}</div>
                                 <small class="text-muted">Total Seats</small>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="text-center">
-                                <i data-feather="dollar-sign" class="text-success mb-2" style="width: 24px; height: 24px;"></i>
+                                <i data-feather="dollar-sign" class="text-success mb-2 icon-24"></i>
                                 <div class="fw-bold">{{ college.fees_range }}</div>
                                 <small class="text-muted">Fee Range</small>
                             </div>
@@ -175,7 +175,7 @@
                     <!-- Courses -->
                     <div class="mb-4">
                         <h6 class="fw-semibold mb-3">
-                            <i data-feather="book" class="me-2" style="width: 16px; height: 16px;"></i>
+                            <i data-feather="book" class="me-2 icon-16"></i>
                             Available Courses
                         </h6>
                         <div class="d-flex flex-wrap gap-2">
@@ -191,7 +191,7 @@
                     <!-- Facilities -->
                     <div class="mb-4">
                         <h6 class="fw-semibold mb-3">
-                            <i data-feather="home" class="me-2" style="width: 16px; height: 16px;"></i>
+                            <i data-feather="home" class="me-2 icon-16"></i>
                             Facilities
                         </h6>
                         <div class="row g-2">
@@ -210,7 +210,7 @@
                     {% if college.cutoff_info %}
                     <div class="mb-4">
                         <h6 class="fw-semibold mb-2">
-                            <i data-feather="trending-up" class="me-2" style="width: 16px; height: 16px;"></i>
+                            <i data-feather="trending-up" class="me-2 icon-16"></i>
                             Admission Requirements
                         </h6>
                         <p class="text-muted small mb-0">{{ college.cutoff_info }}</p>
@@ -221,7 +221,7 @@
                     {% if college.scholarships %}
                     <div class="mb-4">
                         <h6 class="fw-semibold mb-2">
-                            <i data-feather="award" class="me-2" style="width: 16px; height: 16px;"></i>
+                            <i data-feather="award" class="me-2 icon-16"></i>
                             Scholarships
                         </h6>
                         <p class="text-muted small mb-0">{{ college.scholarships }}</p>
@@ -232,16 +232,16 @@
                     <div class="d-flex gap-2">
                         {% if college.website %}
                         <a href="{{ college.website }}" target="_blank" class="btn btn-primary btn-sm flex-fill">
-                            <i data-feather="external-link" class="me-1" style="width: 14px; height: 14px;"></i>
+                            <i data-feather="external-link" class="me-1 icon-14"></i>
                             Visit Website
                         </a>
                         {% endif %}
-                        <button class="btn btn-outline-secondary btn-sm flex-fill" onclick="saveCollege({{ college.id }})">
-                            <i data-feather="bookmark" class="me-1" style="width: 14px; height: 14px;"></i>
+                        <button class="btn btn-outline-secondary btn-sm flex-fill" onclick="saveCollege('{{ college.id }}', event)">
+                            <i data-feather="bookmark" class="me-1 icon-14"></i>
                             Save
                         </button>
                         <button class="btn btn-outline-info btn-sm" onclick="shareCollege('{{ college.name }}')">
-                            <i data-feather="share-2" style="width: 14px; height: 14px;"></i>
+                            <i data-feather="share-2" class="icon-14"></i>
                         </button>
                     </div>
                 </div>
@@ -250,12 +250,20 @@
         {% endfor %}
     </div>
 
-    <!-- Load More Button (if needed) -->
-    <div class="row mt-5">
-        <div class="col-12 text-center">
-            <p class="text-muted">Showing all {{ colleges|length }} results</p>
-        </div>
-    </div>
+    {% if pages and pages > 1 %}
+    <!-- Pagination -->
+    <nav aria-label="College results pages" class="mt-4">
+        <ul class="pagination justify-content-center">
+            <li class="page-item {% if not has_prev %}disabled{% endif %}">
+                <a class="page-link" href="{{ url_for('college_finder', page=prev_num, per_page=per_page, state=current_state, type=current_type, search=current_search) }}" tabindex="-1">Previous</a>
+            </li>
+            <li class="page-item disabled"><span class="page-link">Page {{ page }} of {{ pages }}</span></li>
+            <li class="page-item {% if not has_next %}disabled{% endif %}">
+                <a class="page-link" href="{{ url_for('college_finder', page=next_num, per_page=per_page, state=current_state, type=current_type, search=current_search) }}">Next</a>
+            </li>
+        </ul>
+    </nav>
+    {% endif %}
 
     {% else %}
     <!-- No Results -->
@@ -310,24 +318,30 @@ function clearFilters() {
     document.getElementById('filterForm').submit();
 }
 
-function saveCollege(collegeId) {
+function saveCollege(collegeId, ev) {
     // Save to localStorage for now (could be enhanced with user accounts)
+    const id = Number(collegeId);
     let savedColleges = JSON.parse(localStorage.getItem('savedColleges') || '[]');
-    if (!savedColleges.includes(collegeId)) {
-        savedColleges.push(collegeId);
+    if (!savedColleges.includes(id)) {
+        savedColleges.push(id);
         localStorage.setItem('savedColleges', JSON.stringify(savedColleges));
         
         // Show feedback
-        event.target.innerHTML = '<i data-feather="check" class="me-1" style="width: 14px; height: 14px;"></i>Saved';
-        event.target.classList.remove('btn-outline-secondary');
-        event.target.classList.add('btn-success');
+        const btn = ev && ev.currentTarget ? ev.currentTarget : null;
+        if (btn) {
+            btn.innerHTML = '<i data-feather="check" class="me-1 icon-14"></i>Saved';
+            btn.classList.remove('btn-outline-secondary');
+            btn.classList.add('btn-success');
+        }
         feather.replace();
         
         setTimeout(() => {
-            event.target.innerHTML = '<i data-feather="bookmark" class="me-1" style="width: 14px; height: 14px;"></i>Save';
-            event.target.classList.remove('btn-success');
-            event.target.classList.add('btn-outline-secondary');
-            feather.replace();
+            if (btn) {
+                btn.innerHTML = '<i data-feather="bookmark" class="me-1 icon-14"></i>Save';
+                btn.classList.remove('btn-success');
+                btn.classList.add('btn-outline-secondary');
+                feather.replace();
+            }
         }, 2000);
     }
 }

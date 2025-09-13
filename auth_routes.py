@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for, session, jsonify
 from flask_login import login_user, logout_user, login_required, current_user
-from app import db
+from extensions import db
 from models import User, ParentChildRelation
 import uuid
 from datetime import datetime

@@ -21,23 +21,30 @@
     <div class="edvise-chat-body" id="edvise-body">
       <div class="edvise-msg edvise-bot">
         <div class="edvise-avatar"><img src="${logoPath}" alt="bot"/></div>
-        <div class="edvise-bubble">Hi! Ask me about careers, exams, colleges, or scholarships.
+        <div class="edvise-bubble">
+          <div class="greeting-message">
+            <div class="greeting-text">Hello! 👋 Welcome to EdVise Career Assistant!</div>
+            <div class="greeting-subtext">I'm here to help you with career guidance, education advice, and opportunities in Jammu & Kashmir. Feel free to ask me anything!</div>
+          </div>
           <div class="edvise-suggestions">
+            <span class="edvise-chip" data-q="Hello">👋 Say Hello</span>
+            <span class="edvise-chip" data-q="What can you help me with?">What can you do?</span>
             <span class="edvise-chip" data-q="Best career for maths lover?">Maths careers</span>
             <span class="edvise-chip" data-q="Upcoming exams after 12th?">Exams after 12th</span>
-            <span class="edvise-chip" data-q="Government scholarships for SC/ST/OBC?">Govt scholarships</span>
+            <span class="edvise-chip" data-q="Government scholarships for students?">Scholarships</span>
+            <span class="edvise-chip" data-q="Engineering colleges in J&K?">J&K Colleges</span>
           </div>
         </div>
       </div>
     </div>
     <div class="edvise-chat-footer">
       <form class="edvise-input" id="edvise-form">
-        <input type="text" placeholder="Type your question..." required />
+        <input type="text" placeholder="Ask me about careers, exams, or colleges..." required />
         <button type="submit">Send</button>
       </form>
     </div>`;
 
-  function addMessage(role, text){
+  function addMessage(role, text, isStructured = false){
     const body = panel.querySelector('#edvise-body');
     const wrap = document.createElement('div');
     wrap.className = 'edvise-msg ' + (role === 'user' ? 'edvise-user' : 'edvise-bot');
@@ -46,7 +53,32 @@
     avatar.innerHTML = `<img src="${logoPath}" alt="${role}"/>`;
     const bubble = document.createElement('div');
     bubble.className = 'edvise-bubble';
-    bubble.textContent = text;
+    
+    if (isStructured && typeof text === 'object') {
+      // Handle structured response
+      let content = `<div class="structured-response">`;
+      if (text.summary) {
+        content += `<div class="response-summary">${text.summary}</div>`;
+      }
+      if (text.points && Array.isArray(text.points)) {
+        content += `<div class="response-points">`;
+        text.points.forEach((point, index) => {
+          content += `<div class="response-point">
+            <span class="point-number">${index + 1}.</span>
+            <span class="point-text">${point}</span>
+          </div>`;
+        });
+        content += `</div>`;
+      }
+      if (text.wordCount) {
+        content += `<div class="word-count">Word count: ${text.wordCount}</div>`;
+      }
+      content += `</div>`;
+      bubble.innerHTML = content;
+    } else {
+      bubble.textContent = text;
+    }
+    
     wrap.appendChild(avatar);
     wrap.appendChild(bubble);
     body.appendChild(wrap);
@@ -113,8 +145,24 @@
         let data = {};
         try { data = await res.json(); } catch {}
         if(!res.ok) throw new Error((data && data.error) ? data.error : `HTTP ${res.status}`);
-        thinkingBubble.textContent = data.reply || '(no reply)';
-        history.push({role:'assistant', content:data.reply || ''});
+        
+        // Remove thinking bubble
+        thinkingBubble.parentNode.remove();
+        
+        // Handle structured response
+        if (data.status === 'success' && data.response) {
+          addMessage('assistant', data.response, true);
+          history.push({role:'assistant', content: data.response.summary || 'Career guidance provided'});
+        } else if (data.status === 'error' && data.response && data.response.message) {
+          addMessage('assistant', data.response.message);
+          history.push({role:'assistant', content: data.response.message});
+        } else if (data.reply) {
+          // Fallback to old format if somehow returned
+          addMessage('assistant', data.reply);
+          history.push({role:'assistant', content: data.reply});
+        } else {
+          addMessage('assistant', 'Sorry, I couldn\'t process your request properly.');
+        }
       }catch(err){
         thinkingBubble.textContent = 'Sorry, I had trouble answering that. (' + err.message + ')';
         console.error(err);

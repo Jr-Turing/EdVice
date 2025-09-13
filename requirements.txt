@@ -10,3 +10,7 @@ flask-login>=0.6.3
 oauthlib>=3.3.1
 pyjwt>=2.10.1
 requests>=2.32.0
+fastapi>=0.114.0
+uvicorn[standard]>=0.30.0
+python-dotenv>=1.0.0
+flask-migrate>=4.0.0

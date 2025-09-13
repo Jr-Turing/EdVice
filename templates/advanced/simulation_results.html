@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Simulation Results - EdVise{% endblock %}
+{% block content %}
+<section class="py-5">
+  <div class="container">
+    <h1 class="mb-3">Career Simulation</h1>
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <div class="row g-3">
+          <div class="col-md-6">
+            <h6 class="text-muted">Chosen Stream</h6>
+            <div>{{ stream }}</div>
+          </div>
+          <div class="col-md-6">
+            <h6 class="text-muted">Salary Range</h6>
+            <div>{{ simulation.salary_range }}</div>
+          </div>
+          <div class="col-md-6">
+            <h6 class="text-muted">Possible Careers</h6>
+            <div>{{ simulation.possible_careers|join(', ') }}</div>
+          </div>
+          <div class="col-md-6">
+            <h6 class="text-muted">Growth</h6>
+            <div>{{ simulation.growth_prospects }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

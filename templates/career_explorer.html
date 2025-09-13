@@ -126,15 +126,15 @@
                             {% elif career.category == 'Business' %}biz-icon
                             {% endif %}">
                             {% if career.category == 'Technology' %}
-                            <i data-feather="cpu" class="text-white" style="width: 28px; height: 28px;"></i>
+                            <i data-feather="cpu" class="text-white icon-28"></i>
                             {% elif career.category == 'Healthcare' %}
-                            <i data-feather="heart" class="text-white" style="width: 28px; height: 28px;"></i>
+                            <i data-feather="heart" class="text-white icon-28"></i>
                             {% elif career.category == 'Government' %}
-                            <i data-feather="flag" class="text-white" style="width: 28px; height: 28px;"></i>
+                            <i data-feather="flag" class="text-white icon-28"></i>
                             {% elif career.category == 'Education' %}
-                            <i data-feather="book-open" class="text-white" style="width: 28px; height: 28px;"></i>
+                            <i data-feather="book-open" class="text-white icon-28"></i>
                             {% elif career.category == 'Business' %}
-                            <i data-feather="briefcase" class="text-white" style="width: 28px; height: 28px;"></i>
+                            <i data-feather="briefcase" class="text-white icon-28"></i>
                             {% endif %}
                         </div>
                         <div class="ms-3">
@@ -154,28 +154,28 @@
                         <div class="row align-items-center">
                             <div class="col-3 flow-step">
                                 <div class="flow-icon">
-                                    <i data-feather="book" class="text-primary" style="width: 20px; height: 20px;"></i>
+                                    <i data-feather="book" class="text-primary icon-20"></i>
                                 </div>
                                 <h6 class="fw-semibold">Education</h6>
                                 <small class="text-muted">{{ career.required_education[:30] }}...</small>
                             </div>
                             <div class="col-3 flow-step">
                                 <div class="flow-icon">
-                                    <i data-feather="user" class="text-primary" style="width: 20px; height: 20px;"></i>
+                                    <i data-feather="user" class="text-primary icon-20"></i>
                                 </div>
                                 <h6 class="fw-semibold">Entry Level</h6>
                                 <small class="text-muted">{{ career.job_roles[0] if career.job_roles else 'Junior Role' }}</small>
                             </div>
                             <div class="col-3 flow-step">
                                 <div class="flow-icon">
-                                    <i data-feather="dollar-sign" class="text-primary" style="width: 20px; height: 20px;"></i>
+                                    <i data-feather="dollar-sign" class="text-primary icon-20"></i>
                                 </div>
                                 <h6 class="fw-semibold">Salary</h6>
                                 <small class="text-muted">{{ career.salary_range }}</small>
                             </div>
                             <div class="col-3 flow-step">
                                 <div class="flow-icon">
-                                    <i data-feather="trending-up" class="text-primary" style="width: 20px; height: 20px;"></i>
+                                    <i data-feather="trending-up" class="text-primary icon-20"></i>
                                 </div>
                                 <h6 class="fw-semibold">Growth</h6>
                                 <small class="text-muted">Leadership Roles</small>
@@ -186,7 +186,7 @@
                     <!-- Job Roles -->
                     <div class="mb-4">
                         <h6 class="fw-semibold mb-3">
-                            <i data-feather="briefcase" class="me-2" style="width: 16px; height: 16px;"></i>
+                            <i data-feather="briefcase" class="me-2 icon-16"></i>
                             Possible Job Roles
                         </h6>
                         <div class="d-flex flex-wrap gap-2">
@@ -200,7 +200,7 @@
                     {% if career.skills_required %}
                     <div class="mb-4">
                         <h6 class="fw-semibold mb-3">
-                            <i data-feather="star" class="me-2" style="width: 16px; height: 16px;"></i>
+                            <i data-feather="star" class="me-2 icon-16"></i>
                             Key Skills Required
                         </h6>
                         <div>
@@ -215,7 +215,7 @@
                     {% if career.growth_opportunities %}
                     <div class="mb-4">
                         <h6 class="fw-semibold mb-2">
-                            <i data-feather="arrow-up-right" class="me-2" style="width: 16px; height: 16px;"></i>
+                            <i data-feather="arrow-up-right" class="me-2 icon-16"></i>
                             Career Growth Path
                         </h6>
                         <p class="text-muted small">{{ career.growth_opportunities }}</p>
@@ -225,11 +225,11 @@
                     <!-- Action Buttons -->
                     <div class="d-flex gap-2">
                         <a href="{{ url_for('college_finder') }}?type={{ career.category }}" class="btn btn-primary btn-sm flex-fill">
-                            <i data-feather="search" class="me-1" style="width: 14px; height: 14px;"></i>
+                            <i data-feather="search" class="me-1 icon-14"></i>
                             Find Colleges
                         </a>
                         <a href="{{ url_for('quiz') }}" class="btn btn-outline-secondary btn-sm flex-fill">
-                            <i data-feather="clipboard" class="me-1" style="width: 14px; height: 14px;"></i>
+                            <i data-feather="clipboard" class="me-1 icon-14"></i>
                             Take Quiz
                         </a>
                     </div>

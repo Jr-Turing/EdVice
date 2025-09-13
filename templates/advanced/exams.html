@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Exam Calendar - EdVise{% endblock %}
+{% block content %}
+<section class="py-5">
+  <div class="container">
+    <h1 class="mb-4">Exam Calendar</h1>
+    {% if upcoming_exams %}
+      <h5 class="text-muted mb-3">Upcoming (next 6 months)</h5>
+      <div class="list-group mb-4">
+        {% for exam in upcoming_exams %}
+          <div class="list-group-item">
+            <div class="d-flex justify-content-between">
+              <strong>{{ exam.name }}</strong>
+              <small class="text-muted">{{ exam.exam_date.strftime('%b %d, %Y') if exam.exam_date }}</small>
+            </div>
+            <div class="text-muted small">Type: {{ exam.exam_type or '—' }}</div>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <h5 class="text-muted mb-3">All Exams</h5>
+    {% if exams %}
+      <div class="list-group">
+        {% for exam in exams %}
+          <div class="list-group-item">
+            <div class="d-flex justify-content-between">
+              <strong>{{ exam.name }}</strong>
+              <small class="text-muted">{{ exam.exam_date.strftime('%b %d, %Y') if exam.exam_date }}</small>
+            </div>
+            <div class="text-muted small">Type: {{ exam.exam_type or '—' }}</div>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="alert alert-info">No exams found.</div>
+    {% endif %}
+  </div>
+  </section>
+{% endblock %}

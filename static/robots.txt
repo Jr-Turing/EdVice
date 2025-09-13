@@ -1,0 +1,19 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: {{ url_for('sitemap', _external=True) }}
+
+# Disallow admin areas
+Disallow: /admin/
+Disallow: /api/
+Disallow: /static/js/
+Disallow: /static/css/
+
+# Allow important pages
+Allow: /
+Allow: /quiz
+Allow: /career-explorer
+Allow: /college-finder
+Allow: /about
+Allow: /contact

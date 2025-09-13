@@ -80,7 +80,7 @@
                     <span class="text-muted">{{ "%.0f"|format(progress_percent) }}% Complete</span>
                 </div>
                 <div class="quiz-progress">
-                    <div class="quiz-progress-bar" style="width: {{ progress_percent }}%"></div>
+                    <div class="quiz-progress-bar" data-width="{{ progress_percent }}"></div>
                 </div>
             </div>
             
@@ -97,7 +97,7 @@
                         <div class="options-container">
                             {% for option in current_question.options %}
                             <button type="button" class="btn option-btn" onclick="selectOption('{{ option.value }}')">
-                                <i data-feather="circle" class="me-3 option-icon"></i>
+                                <i data-feather="circle" class="me-3 option-icon icon-20"></i>
                                 {{ option.text }}
                             </button>
                             {% endfor %}
@@ -119,11 +119,11 @@
                         <!-- Yes/No Options -->
                         <div class="yes-no-options">
                             <button type="button" class="btn btn-outline-success yes-no-btn" onclick="selectYesNo('yes')">
-                                <i data-feather="check" class="me-2"></i>
+                                <i data-feather="check" class="me-2 icon-20"></i>
                                 Yes
                             </button>
                             <button type="button" class="btn btn-outline-danger yes-no-btn" onclick="selectYesNo('no')">
-                                <i data-feather="x" class="me-2"></i>
+                                <i data-feather="x" class="me-2 icon-20"></i>
                                 No
                             </button>
                         </div>
@@ -133,7 +133,7 @@
                         <div class="d-flex justify-content-between mt-4">
                             {% if question_number > 1 %}
                             <a href="{{ url_for('quiz_question', question_id=question_number-1) }}" class="btn btn-outline-secondary">
-                                <i data-feather="arrow-left" class="me-2"></i>
+                                <i data-feather="arrow-left" class="me-2 icon-20"></i>
                                 Previous
                             </a>
                             {% else %}
@@ -143,10 +143,10 @@
                             <button type="submit" class="btn btn-primary px-4" id="nextBtn" disabled>
                                 {% if question_number < total_questions %}
                                 Next Question
-                                <i data-feather="arrow-right" class="ms-2"></i>
+                                <i data-feather="arrow-right" class="ms-2 icon-20"></i>
                                 {% else %}
                                 View Results
-                                <i data-feather="check" class="ms-2"></i>
+                                <i data-feather="check" class="ms-2 icon-20"></i>
                                 {% endif %}
                             </button>
                         </div>
@@ -168,21 +168,21 @@
                     <div class="row g-4">
                         <div class="col-md-4">
                             <div class="quiz-feature text-center">
-                                <i data-feather="clock" class="text-primary mb-3" style="width: 48px; height: 48px;"></i>
+                                <i data-feather="clock" class="text-primary mb-3 icon-48"></i>
                                 <h5 class="fw-semibold">15-20 Minutes</h5>
                                 <p class="text-muted small">Complete the assessment at your own pace</p>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="quiz-feature text-center">
-                                <i data-feather="brain" class="text-success mb-3" style="width: 48px; height: 48px;"></i>
+                                <i data-feather="brain" class="text-success mb-3 icon-48"></i>
                                 <h5 class="fw-semibold">20 Questions</h5>
                                 <p class="text-muted small">Scientific psychometric evaluation</p>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="quiz-feature text-center">
-                                <i data-feather="target" class="text-info mb-3" style="width: 48px; height: 48px;"></i>
+                                <i data-feather="target" class="text-info mb-3 icon-48"></i>
                                 <h5 class="fw-semibold">Personalized Results</h5>
                                 <p class="text-muted small">Get top career recommendations</p>
                             </div>
@@ -193,18 +193,18 @@
             
             <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center">
                 <a href="{{ url_for('quiz_question', question_id=1) }}" class="btn btn-primary btn-lg px-5 py-3">
-                    <i data-feather="play" class="me-2"></i>
+                    <i data-feather="play" class="me-2 icon-20"></i>
                     Start Assessment
                 </a>
                 <a href="{{ url_for('index') }}" class="btn btn-outline-secondary btn-lg px-5 py-3">
-                    <i data-feather="arrow-left" class="me-2"></i>
+                    <i data-feather="arrow-left" class="me-2 icon-20"></i>
                     Back to Home
                 </a>
             </div>
             
             <div class="mt-4">
                 <small class="text-muted">
-                    <i data-feather="shield" class="me-1" style="width: 16px; height: 16px;"></i>
+                    <i data-feather="shield" class="me-1 icon-16"></i>
                     Your responses are confidential and used only for generating recommendations
                 </small>
             </div>
@@ -265,6 +265,11 @@ function selectYesNo(value) {
 
 // Enable next button for likert scale
 document.addEventListener('DOMContentLoaded', function() {
+    // Apply progress width from data attribute
+    const bar = document.querySelector('.quiz-progress-bar');
+    if (bar && bar.dataset.width) {
+        bar.style.width = bar.dataset.width + '%';
+    }
     const likertRadios = document.querySelectorAll('input[name="answer"]');
     likertRadios.forEach(radio => {
         radio.addEventListener('change', function() {

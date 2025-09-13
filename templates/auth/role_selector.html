@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Select Role - EdVise{% endblock %}
+{% block content %}
+<section class="py-5">
+  <div class="container">
+    <h1 class="mb-4">Select Your Role</h1>
+    <div class="row g-3">
+      <div class="col-md-4">
+        <a class="btn btn-outline-primary w-100" href="{{ url_for('auth.register') }}?role=student">I'm a Student</a>
+      </div>
+      <div class="col-md-4">
+        <a class="btn btn-outline-success w-100" href="{{ url_for('auth.register') }}?role=parent">I'm a Parent</a>
+      </div>
+      <div class="col-md-4">
+        <a class="btn btn-outline-warning w-100" href="{{ url_for('auth.register') }}?role=teacher">I'm a Teacher</a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

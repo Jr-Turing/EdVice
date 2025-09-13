@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Eligibility Checker - EdVise{% endblock %}
+{% block content %}
+<section class="py-5">
+  <div class="container">
+    <h1 class="mb-4">College Eligibility Checker</h1>
+    <form method="POST" class="row g-3">
+      <div class="col-md-4">
+        <label class="form-label">10th Marks (%)</label>
+        <input type="number" name="marks_10th" min="0" max="100" step="0.1" class="form-control" required>
+      </div>
+      <div class="col-md-4">
+        <label class="form-label">12th Marks (%)</label>
+        <input type="number" name="marks_12th" min="0" max="100" step="0.1" class="form-control" required>
+      </div>
+      <div class="col-md-4">
+        <label class="form-label">Category</label>
+        <select name="category" class="form-select">
+          <option>General</option>
+          <option>SC</option>
+          <option>ST</option>
+          <option>OBC</option>
+        </select>
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Stream (optional)</label>
+        <input type="text" name="stream" class="form-control" placeholder="e.g., Science, Commerce, Arts">
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Preferred State (optional)</label>
+        <input type="text" name="state_preference" class="form-control" placeholder="e.g., Maharashtra">
+      </div>
+      <div class="col-12">
+        <button class="btn btn-primary">Check Eligibility</button>
+      </div>
+    </form>
+  </div>
+</section>
+{% endblock %}
