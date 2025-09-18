@@ -91,7 +91,7 @@ A comprehensive web platform designed to help students make informed career and 
 
 6. **Run the application**
    ```bash
-   python app.py
+   python main.py
    ```
 
 The application will be available at `http://localhost:5000`
