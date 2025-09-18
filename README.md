@@ -62,7 +62,7 @@ A comprehensive web platform designed to help students make informed career and 
 
 2. **Create a virtual environment**
    ```bash
-   python -m venv venv
+   python -m venv
    source venv/bin/activate  # On Windows: venv\Scripts\activate
    ```
 
